@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* Premium Handcrafted Color Palette */
+  --color-soft-pink: #FFB7C5;           /* Soft Blush Pink */
+  --color-soft-pink-light: #FFF0F2;
+  --color-soft-pink-dark: #FFA4B7;
+  --color-lavender: #E6E6FA;            /* Secondary Lavender */
+  --color-lavender-light: #F4F4FF;
+  --color-lavender-dark: #C9C9EB;
+  --color-golden: #D4AF37;              /* Accent Warm Gold */
+  --color-golden-light: #FFDF73;
+  --color-golden-dark: #B59023;
+  --color-cream-white: #FFFDF6;         /* Background Cream White */
+  --color-cream-dark: #FAF5E6;
+  --color-sky-blue: #A0E6FF;            /* Support Sky Blue */
+  --color-sky-blue-light: #E8F8FF;
+  --color-sky-blue-dark: #7DDCFF;
+  --color-peach: #FFE5D9;               /* Support Peach */
+  --color-peach-light: #FFF2EC;
+  --color-peach-dark: #FFCAB3;
+  --color-light-purple: #D8B4F8;        /* Support Soft Purple */
+  --color-light-purple-light: #F8F0FF;
+  --color-light-purple-dark: #C080FA;
+  --color-rose: #FF6B8B;                /* Support Rose */
+  --color-rose-light: #FF8EA6;
+  --color-rose-dark: #E64D6E;
+
+  /* Typography */
+  --font-elegant: 'Cinzel', 'Playfair Display', serif;
+  --font-cute: 'Quicksand', 'Montserrat', sans-serif;
+  --font-body: 'Outfit', 'Inter', sans-serif;
+
+  /* Shadows (Multi-layered for deep premium glass/volumetric depth) */
+  --shadow-luxury: 0 12px 40px -15px rgba(212, 175, 55, 0.18), 0 2px 8px rgba(0, 0, 0, 0.03);
+  --shadow-glass: 0 10px 40px 0 rgba(255, 183, 197, 0.12), 0 1px 2px 0 rgba(255, 255, 255, 0.4) inset;
+  --shadow-soft: 0 16px 36px -12px rgba(255, 107, 139, 0.16), 0 8px 16px -8px rgba(255, 107, 139, 0.08);
+  --shadow-glow-pink: 0 0 25px rgba(255, 183, 197, 0.45);
+  --shadow-glow-gold: 0 0 25px rgba(212, 175, 55, 0.35);
+  --shadow-float-depth: 0 25px 50px -12px rgba(0, 0, 0, 0.08), 0 0 15px rgba(255, 183, 197, 0.05);
+
+  /* Animation */
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-sway: sway 9s ease-in-out infinite;
+  --animate-pulse-slow: pulseSlow 4s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  /* Keyframes */
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-12px) rotate(1deg); }
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-2.5deg) translateX(0); }
+    50% { transform: rotate(2.5deg) translateX(4px); }
+  }
+  @keyframes pulseSlow {
+    0%, 100% { opacity: 0.85; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.03); }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+/* Custom Base Styles */
+@layer base {
+  body {
+    @apply bg-cream-white text-neutral-800 font-body antialiased overflow-x-hidden;
+    /* Safe-area support for iOS notch/home bar screens */
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+    
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(255, 240, 242, 0.6) 0px, transparent 60%),
+      radial-gradient(at 100% 0%, rgba(244, 244, 255, 0.6) 0px, transparent 60%),
+      radial-gradient(at 50% 100%, rgba(232, 248, 255, 0.4) 0px, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-elegant font-semibold tracking-wide text-neutral-900;
+  }
+}
+
+/* Safe-area utility helpers */
+.pb-safe {
+  padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+}
+.pt-safe {
+  padding-top: calc(1.5rem + env(safe-area-inset-top, 0px));
+}
+.min-height-screen-safe {
+  min-height: calc(100svh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-cream-white);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-soft-pink-dark);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-rose);
+}
+
+/* Upgraded Glassmorphism Styles (Floating luxury glass feel) */
+.glass-panel {
+  background: rgba(255, 253, 246, 0.55);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 10px 45px -10px rgba(255, 183, 197, 0.12),
+    0 1px 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+.glass-panel-dark {
+  background: rgba(26, 20, 22, 0.65);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 10px 45px -10px rgba(0, 0, 0, 0.3),
+    0 1px 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+/* Sweep effect keyframes */
+@keyframes sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.animate-sweep {
+  animation: sweep 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+}
