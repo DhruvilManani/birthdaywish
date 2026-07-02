@@ -15,10 +15,10 @@ interface StorybookManagerProps {
 const storybookVariants: Variants = {
   enter: (direction: number) => {
     return {
-      scale: 0.95,
-      y: direction > 0 ? 80 : -80,
+      scale: 0.98,
+      y: direction > 0 ? 20 : -20,
       opacity: 0,
-      filter: 'brightness(1.5) blur(15px)',
+      filter: 'brightness(1.5) blur(20px)',
       zIndex: 0
     };
   },
@@ -29,24 +29,24 @@ const storybookVariants: Variants = {
     opacity: 1,
     filter: 'brightness(1) blur(0px)',
     transition: {
-      y: { type: 'spring', stiffness: 70, damping: 25 },
-      opacity: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-      scale: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-      filter: { duration: 1.2, ease: 'easeOut' },
+      y: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
+      opacity: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
+      scale: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
+      filter: { duration: 1.5, ease: 'easeOut' },
     }
   },
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      scale: 0.9,
-      y: direction < 0 ? 80 : -80,
+      scale: 1.02,
+      y: direction < 0 ? 20 : -20,
       opacity: 0,
-      filter: 'brightness(0.5) blur(10px)',
+      filter: 'brightness(0.8) blur(10px)',
       transition: {
-        y: { type: 'spring', stiffness: 70, damping: 25 },
-        opacity: { duration: 0.8, ease: 'easeInOut' },
-        scale: { duration: 0.8, ease: 'easeInOut' },
-        filter: { duration: 0.8, ease: 'easeIn' },
+        y: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+        opacity: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+        scale: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
+        filter: { duration: 1.2, ease: 'easeIn' },
       }
     };
   }

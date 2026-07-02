@@ -59,7 +59,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
                 transition={{ duration: 1.8, ease: "easeInOut" }}
                 className="absolute inset-0 flex items-center justify-center bg-black/40"
               >
-                {[...Array(12)].map((_, i) => (
+                {[...Array(6)].map((_, i) => (
                   <motion.div
                     key={i}
                     className="absolute rounded-full bg-golden blur-[2px]"

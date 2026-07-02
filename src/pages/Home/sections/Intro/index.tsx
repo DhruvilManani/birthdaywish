@@ -1,97 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, animate } from 'framer-motion';
+import { motion, AnimatePresence, animate } from 'framer-motion';
 import { useScroll } from '../../../../context/ScrollContext';
 import { useAudio } from '../../../../context/AudioContext';
-import { BACKGROUND_MUSIC_URL, INTRO_SENTENCES } from '../../../../constants/config';
+import { BACKGROUND_MUSIC_URL } from '../../../../constants/config';
 import DreamyBackground from '../../../../components/ui/DreamyBackground';
 import MusicPrompt from './MusicPrompt';
-import HeartBeat from './HeartBeat';
-import TypewriterSequence from './TypewriterSequence';
-import WelcomeScreen from './WelcomeScreen';
 
-type IntroStep = 'music-prompt' | 'heart-beat' | 'typewriter' | 'welcome';
+type IntroStep = 'loading' | 'music-prompt' | 'done';
 
 interface IntroSectionProps {
   onBeginJourney?: () => void;
 }
 
 export const IntroSection: React.FC<IntroSectionProps> = ({ onBeginJourney }) => {
-  const [step, setStep] = useState<IntroStep>('music-prompt');
+  const [step, setStep] = useState<IntroStep>('loading');
   const [bgBrightness, setBgBrightness] = useState(0);
   const { lenis, scrollTo } = useScroll();
   const { play, setTrack } = useAudio();
 
-  // Scroll lock system depending on the current cinematic state
   useEffect(() => {
     if (!lenis) return;
-    if (step !== 'welcome') {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
-    return () => {
-      lenis.start();
-    };
+    if (step !== 'done') lenis.stop();
+    else lenis.start();
+    return () => lenis.start();
   }, [lenis, step]);
+
+  useEffect(() => {
+    if (step === 'loading') {
+      const timer = setTimeout(() => {
+        setStep('music-prompt');
+      }, 3000); // 1s fade in + 2s display
+      return () => clearTimeout(timer);
+    }
+  }, [step]);
 
   const handleMusicChoice = (playMusic: boolean) => {
     if (playMusic) {
       setTrack(BACKGROUND_MUSIC_URL);
       play();
     }
-    setStep('heart-beat');
-  };
-
-  const handleHeartBeatComplete = () => {
-    setStep('typewriter');
-  };
-
-  const handleTypewriterComplete = () => {
-    setStep('welcome');
-    // Smoothly transition background gradient from dark to fairytale bright
+    setStep('done');
     animate(0, 1, {
       duration: 2.5,
-      ease: [0.16, 1, 0.3, 1], // Apple easeOutExpo
+      ease: [0.16, 1, 0.3, 1],
       onUpdate: (latest) => setBgBrightness(latest),
     });
-  };
-
-  const handleBeginJourney = () => {
-    if (onBeginJourney) {
-      onBeginJourney();
-    } else {
-      scrollTo('#hero');
-    }
+    if (onBeginJourney) onBeginJourney();
+    else scrollTo('#hero');
   };
 
   return (
-    <section
-      id="intro"
-      className="relative w-full min-h-[100svh] bg-black text-white flex flex-col justify-center items-center overflow-hidden"
-    >
-      {/* 1. Animated Dreamy Canvas Background */}
+    <section id="intro" className="relative w-full min-h-[100svh] bg-black text-white flex flex-col justify-center items-center overflow-hidden z-50">
       <DreamyBackground brightness={bgBrightness} />
-
-      {/* 2. State-driven cinematic wizard */}
+      
       <AnimatePresence mode="wait">
+        {step === 'loading' && (
+          <motion.div 
+            key="loading"
+            initial={{ opacity: 0, filter: 'blur(10px)', scale: 0.95 }}
+            animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
+            exit={{ opacity: 0, filter: 'blur(10px)', scale: 1.05 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="flex flex-col items-center justify-center text-center z-10 px-4"
+          >
+             <p className="font-elegant italic text-stone-200 text-2xl md:text-4xl drop-shadow-md leading-[3rem]">
+               "Made with love...<br/>
+               Just for Baby ❤️"
+             </p>
+          </motion.div>
+        )}
+
         {step === 'music-prompt' && (
           <MusicPrompt key="music-prompt" onChoose={handleMusicChoice} />
-        )}
-
-        {step === 'heart-beat' && (
-          <HeartBeat key="heart-beat" onComplete={handleHeartBeatComplete} />
-        )}
-
-        {step === 'typewriter' && (
-          <TypewriterSequence
-            key="typewriter"
-            sentences={INTRO_SENTENCES}
-            onComplete={handleTypewriterComplete}
-          />
-        )}
-
-        {step === 'welcome' && (
-          <WelcomeScreen key="welcome" onBegin={handleBeginJourney} />
         )}
       </AnimatePresence>
     </section>

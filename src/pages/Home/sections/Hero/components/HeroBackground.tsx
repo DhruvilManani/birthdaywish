@@ -40,7 +40,7 @@ export const HeroBackground: React.FC = () => {
 
       {/* Layer 4: Blurred Roses (Very soft bokeh) */}
       <div className="absolute inset-0 will-change-transform">
-        {[...Array(5)].map((_, i) => (
+        {[...Array(3)].map((_, i) => (
           <motion.div
             key={`rose-bokeh-${i}`}
             className="absolute rounded-full bg-rose-light opacity-[0.08] blur-[40px]"
@@ -66,7 +66,7 @@ export const HeroBackground: React.FC = () => {
 
       {/* Layer 5: Floating Fairy Dust & Sparkles */}
       <motion.div style={{ y: yParticles }} className="absolute inset-0 will-change-transform">
-        {[...Array(25)].map((_, i) => {
+        {[...Array(12)].map((_, i) => {
           const isSparkle = i % 4 === 0;
           
           return (

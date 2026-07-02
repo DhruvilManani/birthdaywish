@@ -18,17 +18,15 @@ export const HomePage: React.FC = () => {
 
   // Map the existing components to the requested Storybook Pages
   const storybookPages = [
-    { id: 'cover', component: <HeroSection /> },
-    { id: 'page1', component: <ChapterOneSection /> },
-    { id: 'page2', component: <TimelineSection title="Beginning" subtitle="Page 2" /> },
-    { id: 'page3', component: <TimelineSection title="Friendship" subtitle="Page 3" /> },
+    { id: 'hero', component: <HeroSection /> },
+    { id: 'chapter1', component: <ChapterOneSection /> },
     { id: 'chapter2', component: <ChapterTwoSection /> },
-    { id: 'page4', component: <TimelineSection title="Love" subtitle="Page 4" /> },
     { id: 'chapter3', component: <ChapterThreeSection /> },
-    { id: 'page5', component: <GallerySection /> },
-    { id: 'page6', component: <LetterSection /> },
-    { id: 'page7', component: <DreamSection /> },
-    { id: 'page8', component: <FinaleSection /> },
+    { id: 'timeline', component: <TimelineSection title="Our Story Timeline" subtitle="From Then to Now" /> },
+    { id: 'gallery', component: <GallerySection /> },
+    { id: 'letter', component: <LetterSection /> },
+    { id: 'dream', component: <DreamSection /> },
+    { id: 'finale', component: <FinaleSection /> },
   ];
 
   return (
