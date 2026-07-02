@@ -57,9 +57,9 @@ export const IntroSection: React.FC<IntroSectionProps> = ({ onBeginJourney }) =>
         {step === 'loading' && (
           <motion.div 
             key="loading"
-            initial={{ opacity: 0, filter: 'blur(10px)', scale: 0.95 }}
-            animate={{ opacity: 1, filter: 'blur(0px)', scale: 1 }}
-            exit={{ opacity: 0, filter: 'blur(10px)', scale: 1.05 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 1.2, ease: "easeInOut" }}
             className="flex flex-col items-center justify-center text-center z-10 px-4"
           >

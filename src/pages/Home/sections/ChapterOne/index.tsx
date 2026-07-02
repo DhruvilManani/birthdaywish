@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { HeroBackground } from '../Hero/components/HeroBackground';
 import { ScrapbookPage } from './ScrapbookPage';
 
 export const ChapterOneSection: React.FC = () => {
+  const { setChapterComplete } = useNavigation();
+
+  useEffect(() => {
+    const timer = setTimeout(() => setChapterComplete(true), 5000);
+    return () => clearTimeout(timer);
+  }, [setChapterComplete]);
+
   return (
     <SectionWrapper id="chapter-one" background="none" fullHeight>
       <div className="relative w-full min-height-screen-safe flex flex-col overflow-hidden pt-safe pb-safe z-10">

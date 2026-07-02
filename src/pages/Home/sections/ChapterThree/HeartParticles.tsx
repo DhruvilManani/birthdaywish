@@ -29,7 +29,7 @@ const Particle: React.FC<{ delay: number, size: number, x: string, duration: num
   return (
     <motion.div
       className="absolute bottom-0 z-0 pointer-events-none"
-      initial={{ y: '100vh', x: x, rotate: 0, opacity: 0 }}
+      initial={{ y: '100dvh', x: x, rotate: 0, opacity: 0 }}
       animate={{ 
         y: '-20vh', 
         x: `calc(${x} + ${Math.random() > 0.5 ? 40 : -40}px)`,

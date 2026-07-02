@@ -1,6 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect } from 'react';
+import { motion, useScroll } from 'framer-motion';
 import { HandwrittenNote, MiniStar, SoftButterfly } from '../ChapterTwo/InteractiveDecorations';
+import { useNavigation } from '../../../../context/NavigationContext';
 
 // A beautifully blended image that fades into the background seamlessly
 const BlendedImage: React.FC<{ src: string; alt: string; className?: string }> = ({ src, alt, className = "" }) => {
@@ -94,12 +95,24 @@ const FloatingSentence: React.FC<{ text: string; delay?: number; align?: 'left'|
 };
 
 export const VisualMoments: React.FC = () => {
-  const handleScrollToNext = () => {
-    window.dispatchEvent(new Event('storybook-next-page'));
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { setChapterComplete } = useNavigation();
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  useEffect(() => {
+    return scrollYProgress.on("change", (latest) => {
+      if (latest > 0.98) {
+        setChapterComplete(true);
+      }
+    });
+  }, [scrollYProgress, setChapterComplete]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto flex flex-col items-center pb-32 relative z-10">
+    <div ref={containerRef} className="w-full max-w-4xl mx-auto flex flex-col items-center pb-32 relative z-10">
       
       {/* 2. Animated paragraph fades in */}
       <motion.p
@@ -146,7 +159,7 @@ export const VisualMoments: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 2, ease: "easeOut" }}
-        onClick={handleScrollToNext}
+        onClick={() => setChapterComplete(true)}
       >
         <h3 className="font-elegant text-4xl md:text-6xl text-rose-900 leading-relaxed drop-shadow-sm group-hover:scale-105 transition-transform duration-700">
           And then... <br />

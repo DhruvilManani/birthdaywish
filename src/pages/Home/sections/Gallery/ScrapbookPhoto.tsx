@@ -49,8 +49,8 @@ export const ScrapbookPhoto: React.FC<ScrapbookPhotoProps> = ({
     <motion.div
       layoutId={layoutId}
       onClick={onClick}
-      initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)', rotate: rotation - 15, y: 50 }}
-      whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)', rotate: rotation, y: 0 }}
+      initial={{ opacity: 0, scale: 0.8, rotate: rotation - 15, y: 50 }}
+      whileInView={{ opacity: 1, scale: 1, rotate: rotation, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration, delay, type: "spring", bounce: 0.2 }}
       whileHover={{ scale: 1.03, rotate: rotation + (Math.random() > 0.5 ? 2 : -2), y: -10, transition: { duration: 0.4, ease: "easeOut" } }}
@@ -79,14 +79,12 @@ export const ScrapbookPhoto: React.FC<ScrapbookPhotoProps> = ({
         
         {/* The Image */}
         <div className="relative w-full aspect-square md:aspect-[4/5] bg-stone-100 overflow-hidden shadow-inner pointer-events-none">
-          <img
-            src={src}
+          <img loading="lazy" src={src}
             alt={alt}
             onError={() => setHasError(true)}
             onLoad={() => setIsLoaded(true)}
             className={`w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             style={{ filter: 'sepia(10%) contrast(105%) brightness(95%)' }}
-            loading="lazy"
           />
         </div>
       </div>

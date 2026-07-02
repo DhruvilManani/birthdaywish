@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { NightSkyParticles } from './NightSkyParticles';
 
@@ -15,7 +16,7 @@ const VideoCallMemory: React.FC = () => {
       {/* Blurred background image for the caller */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-screen" 
-        style={{ backgroundImage: 'url(/images/chapter3/sitting_stars.png)', filter: 'blur(10px) brightness(1.2)' }}
+        style={{ backgroundImage: 'url(/images/chapter3/sitting_stars.png)' }}
       />
       
       {/* Self PIP (Picture in Picture) */}
@@ -68,7 +69,7 @@ const ClimaxProposal: React.FC<{ onExplode: () => void }> = ({ onExplode }) => {
   };
 
   return (
-    <div ref={containerRef} className="h-screen w-full flex items-center justify-center relative z-20">
+    <div ref={containerRef} className="h-[100dvh] w-full flex items-center justify-center relative z-20">
       <h2 className="font-elegant text-5xl md:text-7xl lg:text-8xl text-white tracking-widest flex flex-col items-center gap-6 drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
         <motion.span custom={0} initial="hidden" animate={isInView ? "visible" : "hidden"} variants={wordVariants}>
           Will
@@ -86,11 +87,28 @@ const ClimaxProposal: React.FC<{ onExplode: () => void }> = ({ onExplode }) => {
 
 export const ProposalSection: React.FC = () => {
   const [hasExploded, setHasExploded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { setChapterComplete } = useNavigation();
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    
+    // Near the bottom
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      // Complete only if the explosion sequence is over or we are at the very bottom
+      setChapterComplete(true);
+    }
+  };
 
   return (
-    <SectionWrapper id="proposal" background="none" fullHeight={false} className="h-full p-0 py-0 md:py-0 relative overflow-hidden bg-[#0a0f1d]">
+    <SectionWrapper id="proposal" background="none" fullHeight={false} className="h-[100dvh] p-0 py-0 md:py-0 relative overflow-hidden bg-[#0a0f1d]">
       
-      <div className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
+      <div 
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth"
+      >
         
         {/* Sky Background Gradient */}
         <div className="absolute top-0 left-0 w-full min-h-[500vh] bg-gradient-to-b from-[#0a0f1d] via-[#12163b] to-black opacity-100 z-0 pointer-events-none" />
@@ -104,7 +122,7 @@ export const ProposalSection: React.FC = () => {
         />
 
         {/* Dynamic Light Leaks */}
-        <div className="sticky top-0 w-full h-screen overflow-hidden pointer-events-none z-0">
+        <div className="sticky top-0 w-full h-[100dvh] overflow-hidden pointer-events-none z-0">
           <motion.div 
             animate={{ opacity: hasExploded ? 0 : [0.2, 0.4, 0.2] }}
             transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -118,7 +136,7 @@ export const ProposalSection: React.FC = () => {
         </div>
 
         {/* Particles Engine */}
-        <div className="sticky top-0 w-full h-screen pointer-events-none z-10">
+        <div className="sticky top-0 w-full h-[100dvh] pointer-events-none z-10">
           <NightSkyParticles hasExploded={hasExploded} />
         </div>
 
@@ -162,8 +180,7 @@ export const ProposalSection: React.FC = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 2, ease: "easeOut" }}
           >
-            <img 
-              src="/images/proposal/emotional_comfort.png" 
+            <img loading="lazy" src="/images/proposal/emotional_comfort.png" 
               alt="Emotional comfort"
               className="w-full h-auto object-cover mix-blend-screen opacity-90"
               style={{
@@ -221,7 +238,7 @@ export const ProposalSection: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 3, delay: 4 }}
-                className="w-full h-screen flex items-center justify-center mt-32 mb-32"
+                className="w-full h-[100dvh] flex items-center justify-center mt-32 mb-32"
               >
                 <h3 className="font-elegant text-3xl md:text-5xl text-white/70 leading-relaxed text-center drop-shadow-sm">
                   "And from that night... <br /><br />

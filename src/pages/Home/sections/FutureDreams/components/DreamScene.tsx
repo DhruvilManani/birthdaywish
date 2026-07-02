@@ -27,7 +27,7 @@ export const DreamScene: React.FC<DreamSceneProps> = ({
       id={id} 
       ref={ref} 
       onClick={onSceneTap}
-      className={`relative w-full min-h-[90vh] md:min-h-screen flex flex-col items-center justify-center py-24 px-4 overflow-hidden snap-start ${onSceneTap ? 'cursor-pointer' : ''}`}
+      className={`relative w-full min-h-[90vh] md:min-h-[100dvh] flex flex-col items-center justify-center py-24 px-4 overflow-hidden snap-start ${onSceneTap ? 'cursor-pointer' : ''}`}
     >
       {/* Background Image with Mask and Continuous Slow Zoom */}
       <motion.div 
@@ -40,8 +40,7 @@ export const DreamScene: React.FC<DreamSceneProps> = ({
         }}
         className="absolute inset-0 w-full h-full z-0 origin-center"
       >
-        <img 
-          src={imageSrc} 
+        <img loading="lazy" src={imageSrc} 
           alt={imageAlt}
           onLoad={() => setIsLoaded(true)}
           className={`w-full h-full object-cover transition-opacity duration-1000 ${isLoaded ? 'opacity-80 md:opacity-100' : 'opacity-0'}`}

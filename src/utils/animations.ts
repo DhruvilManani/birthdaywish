@@ -55,12 +55,10 @@ export const blurReveal = (delay = 0, duration = 1.0): Variants => {
   return {
     hidden: {
       opacity: 0,
-      filter: 'blur(10px)',
       y: 20,
     },
     show: {
       opacity: 1,
-      filter: 'blur(0px)',
       y: 0,
       transition: {
         duration,
@@ -75,11 +73,9 @@ export const blurReveal = (delay = 0, duration = 1.0): Variants => {
 export const pageTransitionVariants: Variants = {
   initial: {
     opacity: 0,
-    filter: 'blur(10px)',
   },
   animate: {
     opacity: 1,
-    filter: 'blur(0px)',
     transition: {
       duration: 0.8,
       ease: [0.16, 1, 0.3, 1],
@@ -87,7 +83,6 @@ export const pageTransitionVariants: Variants = {
   },
   exit: {
     opacity: 0,
-    filter: 'blur(10px)',
     transition: {
       duration: 0.5,
       ease: 'easeInOut',

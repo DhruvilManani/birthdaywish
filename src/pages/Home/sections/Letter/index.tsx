@@ -1,11 +1,12 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 
 const FadeInParagraph: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className }) => (
   <motion.p 
-    initial={{ opacity: 0, filter: 'blur(3px)', y: 20 }}
-    whileInView={{ opacity: 1, filter: 'blur(0px)', y: 0 }}
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, margin: "-15%" }}
     transition={{ duration: 1.8, ease: "easeOut" }}
     className={className}
@@ -17,11 +18,20 @@ const FadeInParagraph: React.FC<{ children: React.ReactNode, className?: string 
 export const LetterSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpened, setIsOpened] = useState(false);
+  const { setChapterComplete } = useNavigation();
 
   const { scrollYProgress } = useScroll({ 
     target: containerRef,
     offset: ["start start", "end end"] 
   });
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      setChapterComplete(true);
+    }
+  };
 
   // Dynamic Background: Brightens in the middle, darkens slightly at the end
   const bgBrightness = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 0.95]);
@@ -30,7 +40,7 @@ export const LetterSection: React.FC = () => {
   const particlesOpacity = useTransform(scrollYProgress, [0, 0.7, 1], [0.8, 0.8, 0]);
 
   const handleNext = () => {
-    window.dispatchEvent(new Event('storybook-next-page'));
+    setChapterComplete(true);
   };
 
   return (
@@ -43,7 +53,7 @@ export const LetterSection: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <motion.div ref={containerRef} style={{ filter: `brightness(${bgBrightness})` }} className={`relative w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-1000 ${isOpened ? 'opacity-100 allow-scroll' : 'opacity-0 overflow-hidden h-screen'}`}>
+      <motion.div onScroll={handleScroll} ref={containerRef} style={{ filter: `brightness(${bgBrightness})` }} className={`relative w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-1000 ${isOpened ? 'opacity-100 allow-scroll' : 'opacity-0 overflow-hidden h-[100dvh]'}`}>
         
         {/* Dynamic Background Environment */}
         <div className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center">
@@ -73,7 +83,7 @@ export const LetterSection: React.FC = () => {
         </div>
 
         {/* The Letter Content */}
-        <div className="relative w-full z-20 pb-40 px-5 sm:px-6 md:px-20 min-h-screen pt-32">
+        <div className="relative w-full z-20 pb-40 px-5 sm:px-6 md:px-20 min-h-[100dvh] pt-32">
           {/* Paper container restricting width to 90% on mobile for comfortable margins */}
           <div className="w-[92%] max-w-2xl mx-auto font-cute text-stone-800 text-[19px] md:text-[23px] leading-[3rem] md:leading-[3.5rem] tracking-wide" style={{ textShadow: '0.2px 0.2px 0.5px rgba(0,0,0,0.05)' }}>
             
@@ -313,8 +323,8 @@ export const LetterSection: React.FC = () => {
             
             {/* Signature Area with ink finishing effect */}
             <motion.p 
-              initial={{ opacity: 0, scale: 0.95, filter: 'blur(3px)' }}
-              whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-15%" }}
               transition={{ duration: 2, ease: "easeOut" }}
               className="mb-32 text-[26px] md:text-[32px] text-stone-900"
@@ -358,7 +368,7 @@ const EnvelopeOpening = ({ onOpenComplete }: { onOpenComplete: () => void }) => 
        
        <motion.div 
          className="relative w-[320px] md:w-[500px] aspect-[4/3] flex items-center justify-center drop-shadow-2xl z-10"
-         animate={stage === 'opening' ? { y: [0, 0, '100vh'] } : {}}
+         animate={stage === 'opening' ? { y: [0, 0, '100dvh'] } : {}}
          transition={{ duration: 3, times: [0, 0.6, 1], ease: "easeInOut" }}
        >
           <div className="absolute inset-0 bg-[#E8DCC4] rounded-sm shadow-inner" />
@@ -570,11 +580,12 @@ const EndingSequence = ({ onComplete }: { onComplete: () => void }) => {
              </motion.p>
           </div>
 
-          {/* Phase 4: Birthday Transition (36s+) */}
+             {/* Phase 4: Birthday Transition (36s+) */}
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 2, delay: 36 }}
+            onAnimationComplete={() => setTimeout(onComplete, 2000)}
             className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden"
           >
              {/* Micro-animations: Confetti, Balloons */}
@@ -595,24 +606,6 @@ const EndingSequence = ({ onComplete }: { onComplete: () => void }) => {
                className="text-7xl mb-8 drop-shadow-xl"
              >
                🎂
-             </motion.div>
-             
-             {/* Glowing Arrow / Prompt to proceed to Chapter 11 */}
-             <motion.div 
-               initial={{ opacity: 0 }}
-               animate={{ opacity: 1 }}
-               transition={{ duration: 1, delay: 38 }}
-               className="absolute inset-0 flex flex-col items-center justify-center cursor-pointer group z-50 pt-48"
-               onClick={onComplete}
-               onWheel={onComplete}
-               onTouchMove={onComplete}
-             >
-               <motion.span animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }} className="font-elegant text-stone-800 text-xl tracking-widest mb-4">
-                 Scroll to celebrate...
-               </motion.span>
-               <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }} className="w-10 h-10 rounded-full bg-white/50 backdrop-blur-sm flex items-center justify-center shadow-lg border border-white/40 group-hover:bg-white/80 transition-colors">
-                 <svg className="w-6 h-6 text-stone-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-               </motion.div>
              </motion.div>
           </motion.div>
         </motion.div>

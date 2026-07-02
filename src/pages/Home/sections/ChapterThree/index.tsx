@@ -17,7 +17,7 @@ export const ChapterThreeSection: React.FC = () => {
         <div className="absolute top-0 left-0 w-full min-h-[400vh] pointer-events-none opacity-[0.25] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
 
         {/* Dynamic Light Leaks (Fixed position behind scrolling content) */}
-        <div className="sticky top-0 w-full h-screen overflow-hidden pointer-events-none z-0">
+        <div className="sticky top-0 w-full h-[100dvh] overflow-hidden pointer-events-none z-0">
           <motion.div 
             animate={{ opacity: [0.3, 0.6, 0.3], scale: [1, 1.1, 1] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
@@ -31,7 +31,7 @@ export const ChapterThreeSection: React.FC = () => {
         </div>
 
         {/* Particles Engine (Sticky) */}
-        <div className="sticky top-0 w-full h-screen pointer-events-none z-0">
+        <div className="sticky top-0 w-full h-[100dvh] pointer-events-none z-0">
           <HeartParticles />
         </div>
 
@@ -51,8 +51,9 @@ export const ChapterThreeSection: React.FC = () => {
             </h2>
           </motion.div>
 
-          {/* The rest of the visual flow */}
-          <VisualMoments />
+          <div className="relative w-full z-10 pt-20 pb-32">
+            <VisualMoments />
+          </div>
 
         </div>
       </div>

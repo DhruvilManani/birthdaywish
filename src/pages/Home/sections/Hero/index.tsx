@@ -1,17 +1,25 @@
 import React, { useEffect } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { HeroBackground } from './components/HeroBackground';
 import { HeroImage } from './components/HeroImage';
 import { HeroHeading } from './components/HeroHeading';
 import { HeroSubtitle } from './components/HeroSubtitle';
 import { HeroDecorations } from './components/HeroDecorations';
-import { ScrollIndicator } from './components/ScrollIndicator';
 
 export const HeroSection: React.FC = () => {
-  // Global pointer tracking for interactivity
   const pointerX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
   const pointerY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
+  const { setChapterComplete } = useNavigation();
+
+  useEffect(() => {
+    // Hero complete after initial entry animations (~5.5s)
+    const timer = setTimeout(() => {
+      setChapterComplete(true);
+    }, 5500);
+    return () => clearTimeout(timer);
+  }, [setChapterComplete]);
 
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
@@ -48,21 +56,21 @@ export const HeroSection: React.FC = () => {
 
         {/* 2. Touch-Interactive Decorations */}
         <HeroDecorations pointerX={pointerX} pointerY={pointerY} />
-
         {/* 3. Main Content Container (Centered with breathing space) */}
         <div className="relative z-30 flex-1 flex flex-col items-center justify-center w-full max-w-md mx-auto px-6 mt-12 md:mt-16">
           
           <HeroImage />
           
+          <div className="absolute inset-0 z-10 pointer-events-none">
+            <HeroDecorations pointerX={pointerX} pointerY={pointerY} />
+          </div>
+
           <div className="mt-8">
             <HeroHeading />
             <HeroSubtitle />
           </div>
 
         </div>
-
-        {/* 4. Scroll Indicator */}
-        <ScrollIndicator />
         
       </div>
     </SectionWrapper>

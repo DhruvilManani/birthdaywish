@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { TypewriterStory } from './TypewriterStory';
 import { SixYearsIllustration } from './SixYearsIllustration';
 import { PinkWashiTape, PaperClip, InteractiveSticker, MiniStar, SoftButterfly, HandwrittenNote } from './InteractiveDecorations';
@@ -7,6 +8,7 @@ import { PinkWashiTape, PaperClip, InteractiveSticker, MiniStar, SoftButterfly, 
 export const VerticalStoryFlow: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasTriggeredNext = useRef(false);
+  const { setChapterComplete } = useNavigation();
 
   useEffect(() => {
     hasTriggeredNext.current = false;
@@ -24,7 +26,7 @@ export const VerticalStoryFlow: React.FC = () => {
         if (!hasTriggeredNext.current) {
           hasTriggeredNext.current = true;
           setTimeout(() => {
-            window.dispatchEvent(new Event('storybook-next-page'));
+            setChapterComplete(true);
           }, 400); // wait 400ms
         }
       }
@@ -46,7 +48,7 @@ export const VerticalStoryFlow: React.FC = () => {
       <motion.div 
         animate={{ opacity: [0.1, 0.3, 0.1], rotate: [0, 5, 0] }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[200vw] h-[100vh] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[200vw] h-[100dvh] pointer-events-none"
         style={{ background: 'radial-gradient(circle at 50% -20%, rgba(255,255,255,0.4) 0%, transparent 70%)' }}
       />
 
@@ -89,8 +91,7 @@ export const VerticalStoryFlow: React.FC = () => {
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-2xl border-[6px] border-white/80 backdrop-blur-md"
         >
-          <img 
-            src="/images/chapter2/school_students.png" 
+          <img loading="lazy" src="/images/chapter2/school_students.png" 
             alt="School friends illustration" 
             className="w-full h-full object-cover filter sepia-[0.15] brightness-105"
           />

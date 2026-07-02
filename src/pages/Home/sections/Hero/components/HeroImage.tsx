@@ -12,6 +12,9 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
   const { audioRef } = useAudio();
 
   useEffect(() => {
+    let fadeOutTimer: ReturnType<typeof setTimeout>;
+    let normalizeInterval: ReturnType<typeof setTimeout>;
+    
     const timer = setTimeout(() => {
       setIsRevealed(true);
       
@@ -21,22 +24,27 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
         audioRef.current.volume = Math.min(1, originalVolume + 0.3);
         
         // Smoothly normalize after 3 seconds
-        setTimeout(() => {
+        fadeOutTimer = setTimeout(() => {
           if (audioRef.current) {
             let step = 0;
-            const interval = setInterval(() => {
+            normalizeInterval = setInterval(() => {
               step++;
               if (audioRef.current && audioRef.current.volume > originalVolume) {
                 audioRef.current.volume = Math.max(originalVolume, audioRef.current.volume - 0.05);
+              } else {
+                clearInterval(normalizeInterval);
               }
-              if (step >= 6) clearInterval(interval);
             }, 200);
           }
         }, 3000);
       }
-    }, 2000); // 2 second delay before reveal starts
-    
-    return () => clearTimeout(timer);
+    }, 2500);
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(fadeOutTimer);
+      clearInterval(normalizeInterval);
+    };
   }, [audioRef]);
 
   return (
@@ -55,7 +63,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
               // Initial State: Soft golden particles before reveal
               <motion.div
                 key="particles"
-                exit={{ opacity: 0, filter: 'blur(10px)' }}
+                exit={{ opacity: 0 }}
                 transition={{ duration: 1.8, ease: "easeInOut" }}
                 className="absolute inset-0 flex items-center justify-center bg-black/40"
               >
@@ -87,8 +95,8 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
               // Reveal State: The Image
               <motion.div
                 key="image"
-                initial={{ opacity: 0, scale: 0.95, filter: 'blur(15px) brightness(1.5)' }}
-                animate={{ opacity: 1, scale: 1, filter: 'blur(0px) brightness(1)' }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0"
               >

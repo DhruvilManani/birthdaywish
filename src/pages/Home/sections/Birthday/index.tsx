@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 
 /* =========================================================
@@ -264,15 +265,29 @@ export const BirthdaySection: React.FC = () => {
   const [gifts, setGifts] = useState({ g1: false, g2: false, g3: false, g4: false });
   const allGiftsOpened = gifts.g1 && gifts.g2 && gifts.g3 && gifts.g4;
   
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { setChapterComplete } = useNavigation();
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    
+    // Near the bottom
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      setChapterComplete(true);
+    }
+  };
+
   const endingRef = useRef<HTMLDivElement>(null);
   const endingInView = useInView(endingRef, { amount: 0.6 });
 
-  const handleNext = () => {
-    window.dispatchEvent(new Event('storybook-next-page'));
-  };
-
   return (
-    <SectionWrapper id="birthday" background="none" fullHeight={false} className="p-0 bg-[#FDFBF7] overflow-x-hidden">
+    <SectionWrapper id="birthday" background="none" fullHeight={false} className="p-0 bg-[#FDFBF7] overflow-hidden h-[100dvh]">
+      <div 
+        ref={containerRef}
+        onScroll={handleScroll}
+        className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth"
+      >
        
        {/* Background Environment */}
        <div className="fixed inset-0 z-0 pointer-events-none">
@@ -509,7 +524,7 @@ export const BirthdaySection: React.FC = () => {
 
                  <motion.div 
                    className="w-full flex flex-col items-center justify-center cursor-pointer group"
-                   onClick={handleNext}
+                   onClick={() => setChapterComplete(true)}
                  >
                     <motion.div 
                       animate={{ y: [0, 15, 0] }} 
@@ -524,8 +539,9 @@ export const BirthdaySection: React.FC = () => {
               </motion.div>
             )}
           </AnimatePresence>
-
+          <div ref={endingRef} className="h-[20vh] w-full" />
        </div>
+      </div>
     </SectionWrapper>
   );
 };

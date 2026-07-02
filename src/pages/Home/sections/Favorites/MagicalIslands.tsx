@@ -145,8 +145,7 @@ export const CoffeeRainIsland: React.FC = () => {
 const BlendedIllustrationIsland: React.FC<{ src: string, text: string, align: 'left'|'right' }> = ({ src, text, align }) => {
   return (
     <IslandWrapper text={text} align={align}>
-      <img 
-        src={src} 
+      <img loading="lazy" src={src} 
         alt={text}
         className="w-72 h-72 object-cover mix-blend-multiply"
         style={{

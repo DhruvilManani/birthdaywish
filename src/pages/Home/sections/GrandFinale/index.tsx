@@ -394,7 +394,7 @@ const PostCreditScene: React.FC = () => {
             <motion.div
               key={`petal-${i}`}
               initial={{ opacity: 0, y: '-20vh', x: `${Math.random() * 100}vw`, rotate: 0 }}
-              animate={{ opacity: [0, 0.6, 0], y: '100vh', rotate: 360 }}
+              animate={{ opacity: [0, 0.6, 0], y: '100dvh', rotate: 360 }}
               transition={{ duration: 5 + Math.random() * 4, delay: Math.random() * 3, ease: "linear" }}
               className="absolute text-rose-600/60 text-lg blur-[1px]"
             >
@@ -613,7 +613,7 @@ export const GrandFinaleSection: React.FC = () => {
          </motion.div>
 
          {/* SCENE 4 & 5: Fireworks and Typography */}
-         <div className="relative w-full flex flex-col items-center justify-center min-h-screen my-32 z-20">
+         <div className="relative w-full flex flex-col items-center justify-center min-h-[100dvh] my-32 z-20">
             <CinematicFireworks />
             
             <motion.div 

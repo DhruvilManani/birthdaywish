@@ -190,8 +190,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
             style={{ maxWidth: '100%', maxHeight: '100%' }}
           >
             <div className="relative w-full h-full max-h-[60vh] aspect-[4/5] md:aspect-auto overflow-hidden shadow-inner">
-              <img 
-                src={currentImage.src} 
+              <img loading="lazy" src={currentImage.src} 
                 alt={`Memory ${activeIndex + 1}`}
                 className="w-full h-full object-contain pointer-events-none"
                 style={{ filter: 'sepia(10%) contrast(105%) brightness(95%)' }}
@@ -226,8 +225,8 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       
       {/* Preload images */}
       <div className="hidden">
-        {activeIndex > 0 && <img src={images[activeIndex - 1].src} alt="preload prev" />}
-        {activeIndex < images.length - 1 && <img src={images[activeIndex + 1].src} alt="preload next" />}
+        {activeIndex > 0 && <img loading="lazy" src={images[activeIndex - 1].src} alt="preload prev" />}
+        {activeIndex < images.length - 1 && <img loading="lazy" src={images[activeIndex + 1].src} alt="preload next" />}
       </div>
     </motion.div>
   );

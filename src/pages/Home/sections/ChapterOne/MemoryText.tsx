@@ -14,11 +14,10 @@ const containerVariants: Variants = {
 };
 
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 10, filter: 'blur(5px)' },
+  hidden: { opacity: 0, y: 10 },
   show: { 
     opacity: 1, 
-    y: 0, 
-    filter: 'blur(0px)',
+    y: 0,
     transition: { duration: 2, ease: "easeOut" }
   }
 };

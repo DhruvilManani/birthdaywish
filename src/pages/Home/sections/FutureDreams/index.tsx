@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { DreamScene } from './components/DreamScene';
 
@@ -37,8 +38,16 @@ const EmotionalQuote: React.FC<{ children?: React.ReactNode, className?: string 
 export const FutureDreamsSection: React.FC = () => {
   const [interactions, setInteractions] = useState<Record<string, boolean>>({});
 
-  const handleScrollToNext = () => {
-    window.dispatchEvent(new Event('storybook-next-page'));
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { setChapterComplete } = useNavigation();
+
+  const handleScroll = () => {
+    if (!containerRef.current) return;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      setChapterComplete(true);
+    }
   };
 
   const trigger = (key: string) => {
@@ -49,10 +58,12 @@ export const FutureDreamsSection: React.FC = () => {
   };
 
   return (
-    <SectionWrapper id="future-dreams" background="none" fullHeight={false} className="h-full p-0 py-0 md:py-0 relative overflow-hidden bg-[#fdfbf7]">
-      <div className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth snap-y snap-mandatory">
+    <SectionWrapper id="future-dreams" background="none" fullHeight={false} className="p-0 bg-[#0B1021] overflow-hidden">
+      
+      {/* Scrollable Container */}
+      <div ref={containerRef} onScroll={handleScroll} className="relative w-full h-[100dvh] overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
         
-        {/* Paper Texture Background */}
+        {/* Deep space background */}
         <div className="fixed top-0 left-0 w-full h-[100vh] pointer-events-none opacity-[0.35] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
 
         {/* Intro */}
@@ -311,7 +322,7 @@ export const FutureDreamsSection: React.FC = () => {
             </h3>
 
             <motion.div 
-              onClick={handleScrollToNext}
+              onClick={() => setChapterComplete(true)}
               className="mt-24 flex flex-col items-center cursor-pointer group"
             >
               <motion.div className="relative text-5xl md:text-6xl text-amber-500/80 drop-shadow-lg mb-8" animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>

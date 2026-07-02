@@ -22,8 +22,8 @@ export const SafeImage: React.FC<SafeImageProps> = ({ src, alt, className = "", 
       src={src}
       alt={alt}
       style={style}
-      initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)', y: 40 }}
-      whileInView={{ opacity: 1, scale: 1, filter: 'blur(0px)', y: 0 }}
+      initial={{ opacity: 0, scale: 0.9, y: 40 }}
+      whileInView={{ opacity: 1, scale: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ type: "spring", duration: 1.5, bounce: 0.2, delay }}
       className={`${className} will-change-transform ${!isLoaded ? 'invisible' : 'visible'}`}

@@ -26,8 +26,8 @@ export const GlassCard: React.FC<GlassCardProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15, filter: 'blur(4px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y: 15 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] as any }}
       whileHover={hoverEffect ? { y: -5, scale: 1.01 } : undefined}

@@ -16,9 +16,18 @@ const icons = [
 const InteractiveIcon: React.FC<{ item: typeof icons[0] }> = ({ item }) => {
   const [isTapped, setIsTapped] = useState(false);
 
+  const timerRef = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  React.useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   const handleTap = () => {
     setIsTapped(true);
-    setTimeout(() => setIsTapped(false), 2000);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setIsTapped(false), 2000);
   };
 
   return (

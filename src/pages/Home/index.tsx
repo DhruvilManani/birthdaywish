@@ -16,6 +16,7 @@ import FutureDreamsSection from './sections/FutureDreams';
 import BirthdaySection from './sections/Birthday';
 import GrandFinaleSection from './sections/GrandFinale';
 import { StorybookManager } from './StorybookManager';
+import { NavigationProvider } from '../../context/NavigationContext';
 
 export const HomePage: React.FC = () => {
   const [isIntroComplete, setIsIntroComplete] = useState(false);
@@ -44,13 +45,13 @@ export const HomePage: React.FC = () => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="w-full h-screen bg-black overflow-hidden"
+      className="w-full h-[100dvh] bg-[#1a1a1a] overflow-hidden"
     >
       <AnimatePresence mode="wait">
         {!isIntroComplete ? (
           <motion.div
             key="intro"
-            exit={{ opacity: 0, filter: 'blur(20px)', scale: 1.05 }}
+            exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="absolute inset-0 w-full h-full z-50"
           >
@@ -59,12 +60,14 @@ export const HomePage: React.FC = () => {
         ) : (
           <motion.div
             key="storybook"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 2, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-            className="absolute inset-0 w-full h-full"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+            className="w-full h-full relative"
           >
-            <StorybookManager pages={storybookPages} />
+            <NavigationProvider>
+              <StorybookManager pages={storybookPages} />
+            </NavigationProvider>
           </motion.div>
         )}
       </AnimatePresence>
