@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { TypewriterStory } from './TypewriterStory';
 import { SixYearsIllustration } from './SixYearsIllustration';
-import { GlassCard } from '../../../../components/ui/GlassCard';
 import { PinkWashiTape, PaperClip, InteractiveSticker, MiniStar, SoftButterfly, HandwrittenNote } from './InteractiveDecorations';
 
 export const VerticalStoryFlow: React.FC = () => {
-  const scrollToChapterThree = () => {
-    window.dispatchEvent(new Event('storybook-next-page'));
-  };
+  const containerRef = useRef<HTMLDivElement>(null);
+  const hasTriggeredNext = useRef(false);
+
+  useEffect(() => {
+    hasTriggeredNext.current = false;
+    const scrollContainer = containerRef.current;
+    
+    if (!scrollContainer) return;
+    
+    // Reset scroll on mount
+    scrollContainer.scrollTop = 0;
+
+    const handleScroll = () => {
+      const { scrollTop, clientHeight, scrollHeight } = scrollContainer;
+      
+      if (scrollTop + clientHeight >= scrollHeight - 5) {
+        if (!hasTriggeredNext.current) {
+          hasTriggeredNext.current = true;
+          setTimeout(() => {
+            window.dispatchEvent(new Event('storybook-next-page'));
+          }, 400); // wait 400ms
+        }
+      }
+    };
+
+    scrollContainer.addEventListener('scroll', handleScroll);
+    return () => {
+      scrollContainer.removeEventListener('scroll', handleScroll);
+      // Reset scroll on unmount so reopening starts from beginning
+      scrollContainer.scrollTop = 0;
+    };
+  }, []);
 
   return (
-    <div className="relative w-full min-h-[140vh] flex flex-col items-center pt-24 pb-32 px-4 z-20">
+    <div ref={containerRef} className="relative w-full h-full overflow-y-auto overflow-x-hidden flex flex-col items-center pt-24 pb-32 px-4 z-20">
       
       {/* Background Enhancements (Paper texture & Light rays) */}
       <div className="absolute inset-0 pointer-events-none opacity-20 mix-blend-multiply" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.08%22/%3E%3C/svg%3E")' }} />
@@ -76,34 +104,7 @@ export const VerticalStoryFlow: React.FC = () => {
       {/* Typewriter Story Sequence */}
       <TypewriterStory />
 
-      {/* Bottom Button */}
-      <motion.div
-        className="mt-16 relative z-30"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-50px" }}
-        transition={{ duration: 1, delay: 2 }} // Delayed to appear after story typing finishes
-      >
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          animate={{ boxShadow: ['0px 0px 10px rgba(255,255,255,0.2)', '0px 0px 25px rgba(255,255,255,0.6)', '0px 0px 10px rgba(255,255,255,0.2)'] }}
-          transition={{ duration: 3, repeat: Infinity }}
-          className="rounded-full"
-        >
-          <GlassCard 
-            className="px-8 py-3 rounded-full cursor-pointer bg-white/40 hover:bg-white/60 transition-colors duration-300 border border-white/60 shadow-lg flex items-center justify-center"
-            onClick={scrollToChapterThree}
-          >
-            <span className="font-body text-sm tracking-widest text-neutral-800 font-bold flex items-center gap-2 drop-shadow-sm">
-              Continue Our Story 
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 5v14M19 12l-7 7-7-7"/>
-              </svg>
-            </span>
-          </GlassCard>
-        </motion.div>
-      </motion.div>
+    {/* Manual continue button removed, automatic transition handles this */}
       
     </div>
   );

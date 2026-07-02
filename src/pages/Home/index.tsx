@@ -4,29 +4,38 @@ import { pageTransitionVariants } from '../../utils/animations';
 import IntroSection from './sections/Intro';
 import HeroSection from './sections/Hero';
 import TimelineSection from './sections/Timeline';
-import GallerySection from './sections/Gallery';
-import LetterSection from './sections/Letter';
-import DreamSection from './sections/Dream';
-import FinaleSection from './sections/Finale';
 import ChapterOneSection from './sections/ChapterOne';
-import ChapterTwoSection from './sections/ChapterTwo';
 import ChapterThreeSection from './sections/ChapterThree';
+import ChapterTwoSection from './sections/ChapterTwo';
+import GallerySection from './sections/Gallery';
+import RelationshipSection from './sections/Relationship';
+import ProposalSection from './sections/Proposal';
+import FavoritesSection from './sections/Favorites';
+import LetterSection from './sections/Letter';
+import FutureDreamsSection from './sections/FutureDreams';
+import BirthdaySection from './sections/Birthday';
+import GrandFinaleSection from './sections/GrandFinale';
 import { StorybookManager } from './StorybookManager';
 
 export const HomePage: React.FC = () => {
   const [isIntroComplete, setIsIntroComplete] = useState(false);
 
-  // Map the existing components to the requested Storybook Pages
+  // LAZY COMPONENT REFERENCES ONLY: DO NOT INSTANTIATE <Component /> HERE.
+  // This prevents React from building all 13 heavy pages simultaneously on mount.
   const storybookPages = [
-    { id: 'hero', component: <HeroSection /> },
-    { id: 'chapter1', component: <ChapterOneSection /> },
-    { id: 'chapter2', component: <ChapterTwoSection /> },
-    { id: 'chapter3', component: <ChapterThreeSection /> },
-    { id: 'timeline', component: <TimelineSection title="Our Story Timeline" subtitle="From Then to Now" /> },
-    { id: 'gallery', component: <GallerySection /> },
-    { id: 'letter', component: <LetterSection /> },
-    { id: 'dream', component: <DreamSection /> },
-    { id: 'finale', component: <FinaleSection /> },
+    { id: 'hero', component: HeroSection },
+    { id: 'timeline', component: TimelineSection },
+    { id: 'chapter1', component: ChapterOneSection },
+    { id: 'chapter3', component: ChapterThreeSection },
+    { id: 'chapter2', component: ChapterTwoSection },
+    { id: 'gallery', component: GallerySection },
+    { id: 'relationship', component: RelationshipSection },
+    { id: 'proposal', component: ProposalSection },
+    { id: 'favorites', component: FavoritesSection },
+    { id: 'letter', component: LetterSection },
+    { id: 'future', component: FutureDreamsSection },
+    { id: 'birthday', component: BirthdaySection },
+    { id: 'finale', component: GrandFinaleSection }
   ];
 
   return (

@@ -4,7 +4,7 @@ import type { Variants } from 'framer-motion';
 
 interface Page {
   id: string;
-  component: React.ReactNode;
+  component: React.ComponentType<any>;
 }
 
 interface StorybookManagerProps {
@@ -29,10 +29,10 @@ const storybookVariants: Variants = {
     opacity: 1,
     filter: 'brightness(1) blur(0px)',
     transition: {
-      y: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
-      opacity: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
-      scale: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
-      filter: { duration: 1.5, ease: 'easeOut' },
+      y: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+      opacity: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+      scale: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+      filter: { duration: 0.5, ease: 'easeOut' },
     }
   },
   exit: (direction: number) => {
@@ -43,10 +43,10 @@ const storybookVariants: Variants = {
       opacity: 0,
       filter: 'brightness(0.8) blur(10px)',
       transition: {
-        y: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-        opacity: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-        scale: { duration: 1.2, ease: [0.16, 1, 0.3, 1] },
-        filter: { duration: 1.2, ease: 'easeIn' },
+        y: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+        opacity: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+        scale: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+        filter: { duration: 0.4, ease: 'easeIn' },
       }
     };
   }
@@ -69,57 +69,53 @@ export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => 
       // Cooldown to prevent rapid scrolling. Match the longest animation duration.
       setTimeout(() => {
         isTransitioning.current = false;
-      }, 1300);
+      }, 600);
     }
   }, [page, pages.length]);
 
   useEffect(() => {
-    const isScrollable = (target: EventTarget | null) => {
-      if (!target) return false;
-      const el = target as HTMLElement;
-      return !!el.closest('.allow-scroll');
-    };
+    const isChapterTwo = pages[page].id === 'chapter-two';
 
     const handleWheel = (e: WheelEvent) => {
-      if (isScrollable(e.target)) return; // Allow native scroll
+      if (isChapterTwo) return; // Completely ignore wheel in Chapter Two
+      
       if (Math.abs(e.deltaY) > 30) {
         paginate(e.deltaY > 0 ? 1 : -1);
       }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (isChapterTwo) return; // Completely ignore touch in Chapter Two
       touchStartY.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
+      if (isChapterTwo) return; // Completely ignore touch in Chapter Two
       if (touchStartY.current === null) return;
       
       const touchEndY = e.touches[0].clientY;
       const deltaY = touchStartY.current - touchEndY;
       
-      if (isScrollable(e.target)) return; // Allow native scroll
-      
-      // Prevent default scrolling behavior for non-scrollable pages
       if (e.cancelable) {
         e.preventDefault();
       }
       
       if (Math.abs(deltaY) > 60) {
         paginate(deltaY > 0 ? 1 : -1);
-        touchStartY.current = null; // Reset to avoid multiple triggers
+        touchStartY.current = null;
       }
     };
 
     const handleNextPage = () => paginate(1);
     const handlePrevPage = () => paginate(-1);
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    // If ChapterTwo is active, we can allow passive events so browser scrolling is smooth
+    window.addEventListener('wheel', handleWheel, { passive: isChapterTwo });
+    window.addEventListener('touchstart', handleTouchStart, { passive: isChapterTwo });
+    window.addEventListener('touchmove', handleTouchMove, { passive: isChapterTwo });
     window.addEventListener('storybook-next-page', handleNextPage);
     window.addEventListener('storybook-prev-page', handlePrevPage);
 
-    // Lock body scroll completely
     document.body.style.overflow = 'hidden';
 
     return () => {
@@ -130,7 +126,7 @@ export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => 
       window.removeEventListener('storybook-prev-page', handlePrevPage);
       document.body.style.overflow = '';
     };
-  }, [paginate]);
+  }, [paginate, page, pages]);
 
   return (
     <div className="fixed inset-0 w-full h-full overflow-hidden bg-black perspective-[1000px]">
@@ -144,7 +140,7 @@ export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => 
           exit="exit"
           className="absolute inset-0 w-full h-full flex items-center justify-center [transform-style:preserve-3d] will-change-transform"
         >
-          {pages[page].component}
+          {React.createElement(pages[page].component)}
         </motion.div>
       </AnimatePresence>
       
