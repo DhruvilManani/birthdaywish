@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-import { useNavigation } from '../../context/NavigationContext';
 import { NavigationButtons } from '../../components/ui/NavigationButtons';
 
 interface Page {
@@ -52,7 +51,6 @@ const storybookVariants: Variants = {
 export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => {
   const [[page, direction], setPage] = useState([0, 0]);
   const isTransitioning = useRef(false);
-  const { isChapterComplete, setChapterComplete } = useNavigation();
 
   const paginate = useCallback((newDirection: number) => {
     if (isTransitioning.current) return;
@@ -64,14 +62,11 @@ export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => 
       
       setTimeout(() => {
         isTransitioning.current = false;
-      }, 1000);
+      }, 600);
     }
   }, [page, pages.length]);
 
-  // Reset completion state when page changes
-  useEffect(() => {
-    setChapterComplete(false);
-  }, [page, setChapterComplete]);
+
 
   useEffect(() => {
     // Only lock body scroll. We removed global wheel/touch handlers.
@@ -83,19 +78,21 @@ export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => 
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full overflow-hidden bg-black perspective-[1000px]">
-      <AnimatePresence initial={false} custom={direction} mode="wait">
-        <motion.div
-          key={page}
-          custom={direction}
-          variants={storybookVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          className="absolute inset-0 w-full h-full flex items-center justify-center [transform-style:preserve-3d] will-change-transform"
-        >
-          {React.createElement(pages[page].component)}
-        </motion.div>
+    <div className="absolute inset-0 w-full h-full overflow-hidden bg-black perspective-[1000px]">
+      <AnimatePresence initial={false} custom={direction} mode="sync">
+        {page >= 0 && page < pages.length && (
+          <motion.div
+            key={page}
+            custom={direction}
+            variants={storybookVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0 w-full h-full flex items-center justify-center [transform-style:preserve-3d] will-change-transform"
+          >
+            {React.createElement(pages[page].component)}
+          </motion.div>
+        )}
       </AnimatePresence>
       
       {/* Global Navigation Overlay */}
@@ -104,7 +101,6 @@ export const StorybookManager: React.FC<StorybookManagerProps> = ({ pages }) => 
         onPrev={() => paginate(-1)}
         showNext={page < pages.length - 1}
         showPrev={page > 0}
-        isComplete={isChapterComplete}
       />
       
       {/* Global Page Indicator */}

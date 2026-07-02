@@ -190,35 +190,31 @@ const TimeCapsule = () => {
        </motion.div>
 
        {/* Opened Letter */}
-       <AnimatePresence>
-         {opened && (
-           <motion.div 
-             initial={{ opacity: 0, scale: 0.8, y: 50 }}
-             animate={{ opacity: 1, scale: 1, y: 0 }}
-             transition={{ duration: 1.5, ease: "easeOut" }}
-             className="absolute top-0 z-50 bg-[#FDFBF7] w-[90%] max-w-[400px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-sm border border-stone-200"
-           >
-              <p className="font-elegant italic text-stone-800 text-xl md:text-2xl leading-relaxed text-center mb-8">
-                "Open this website again<br/>
-                on your next birthday...<br/><br/>
-                and remember<br/>
-                how deeply<br/>
-                you were loved<br/>
-                today."
-              </p>
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3, duration: 2 }}>
-                <p className="font-elegant italic text-stone-800 text-xl md:text-2xl leading-relaxed text-center">
-                  "I hope<br/>
-                  next year<br/>
-                  we'll have<br/>
-                  even more beautiful memories<br/>
-                  to add here."
-                </p>
-                <div className="text-rose-600 text-2xl text-center mt-6">❤️</div>
-              </motion.div>
-           </motion.div>
-         )}
-       </AnimatePresence>
+       <motion.div 
+         initial={{ opacity: 0, scale: 0.8, y: 50 }}
+         animate={opened ? { opacity: 1, scale: 1, y: 0, pointerEvents: 'auto' } : { opacity: 0, pointerEvents: 'none' }}
+         transition={{ duration: 1.5, ease: "easeOut" }}
+         className="absolute top-0 z-50 bg-[#FDFBF7] w-[90%] max-w-[400px] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-sm border border-stone-200"
+       >
+          <p className="font-elegant italic text-stone-800 text-xl md:text-2xl leading-relaxed text-center mb-8">
+            "Open this website again<br/>
+            on your next birthday...<br/><br/>
+            and remember<br/>
+            how deeply<br/>
+            you were loved<br/>
+            today."
+          </p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: opened ? 1 : 0 }} transition={{ delay: opened ? 3 : 0, duration: 2 }}>
+            <p className="font-elegant italic text-stone-800 text-xl md:text-2xl leading-relaxed text-center">
+              "I hope<br/>
+              next year<br/>
+              we'll have<br/>
+              even more beautiful memories<br/>
+              to add here."
+            </p>
+            <div className="text-rose-600 text-2xl text-center mt-6">❤️</div>
+          </motion.div>
+       </motion.div>
     </div>
   );
 };

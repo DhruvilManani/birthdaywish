@@ -64,7 +64,7 @@ export const AnimatedHeading: React.FC<AnimatedHeadingProps> = ({
       >
         {words.map((word, idx) => {
           // Check if this word should be highlighted in gradient color
-          const cleanWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '');
+          const cleanWord = word.replace(/[.,/#!$%^&*;:{}=\-_`~()]/g, '');
           const isHighlighted = highlightWords.some(
             (hw) => cleanWord.toLowerCase() === hw.toLowerCase()
           );

@@ -17,7 +17,7 @@ export const ScrollIndicator: React.FC = () => {
       <motion.div
         animate={{ y: [-3, 3, -3] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="w-7 h-12 rounded-full border border-white/20 flex justify-center items-start pt-2 bg-white/10 backdrop-blur-xl shadow-[0_10px_20px_rgba(0,0,0,0.1),inset_0_0_10px_rgba(255,255,255,0.2)] relative overflow-hidden"
+        className="w-7 h-12 rounded-full border border-white/20 flex justify-center items-start pt-2 bg-white/10 backdrop-blur-sm shadow-[0_10px_20px_rgba(0,0,0,0.1),inset_0_0_10px_rgba(255,255,255,0.2)] relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent pointer-events-none" />
         

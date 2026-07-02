@@ -1,26 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
+
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { HeroBackground } from '../Hero/components/HeroBackground';
 import { ScrapbookPage } from './ScrapbookPage';
 
 export const ChapterOneSection: React.FC = () => {
-  const { setChapterComplete } = useNavigation();
-
-  useEffect(() => {
-    const timer = setTimeout(() => setChapterComplete(true), 5000);
-    return () => clearTimeout(timer);
-  }, [setChapterComplete]);
 
   return (
     <SectionWrapper id="chapter-one" background="none" fullHeight>
-      <div className="relative w-full min-height-screen-safe flex flex-col overflow-hidden pt-safe pb-safe z-10">
+      <div className="relative flex-1 flex flex-col justify-between items-center w-full z-10 pt-12 pb-8">
         
         {/* Background - Reusing Hero Background for perfect consistency */}
         <HeroBackground />
         
-        <div className="relative z-30 flex-1 flex flex-col items-center justify-start w-full max-w-2xl mx-auto px-6 mt-12 md:mt-20">
+        <div className="relative z-30 flex-1 flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-6">
           
           {/* Section Title */}
           <motion.div 
@@ -46,7 +40,7 @@ export const ChapterOneSection: React.FC = () => {
 
         {/* Bottom Arrow Indicator */}
         <motion.div 
-          className="absolute bottom-safe left-0 right-0 flex flex-col items-center justify-center pb-8 z-30 pointer-events-none"
+          className="relative flex flex-col items-center justify-center z-30 pointer-events-none mt-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}

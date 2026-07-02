@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 
 const FadeInParagraph: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className }) => (
@@ -18,20 +17,12 @@ const FadeInParagraph: React.FC<{ children: React.ReactNode, className?: string 
 export const LetterSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isOpened, setIsOpened] = useState(false);
-  const { setChapterComplete } = useNavigation();
-
   const { scrollYProgress } = useScroll({ 
     target: containerRef,
     offset: ["start start", "end end"] 
   });
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      setChapterComplete(true);
-    }
-  };
+
 
   // Dynamic Background: Brightens in the middle, darkens slightly at the end
   const bgBrightness = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.05, 0.95]);
@@ -40,7 +31,6 @@ export const LetterSection: React.FC = () => {
   const particlesOpacity = useTransform(scrollYProgress, [0, 0.7, 1], [0.8, 0.8, 0]);
 
   const handleNext = () => {
-    setChapterComplete(true);
   };
 
   return (
@@ -53,7 +43,7 @@ export const LetterSection: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <motion.div onScroll={handleScroll} ref={containerRef} style={{ filter: `brightness(${bgBrightness})` }} className={`relative w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-1000 ${isOpened ? 'opacity-100 allow-scroll' : 'opacity-0 overflow-hidden h-[100dvh]'}`}>
+      <motion.div ref={containerRef} style={{ filter: `brightness(${bgBrightness})` }} className={`relative flex flex-col flex-1 w-full h-full overflow-y-auto overflow-x-hidden scroll-smooth transition-opacity duration-1000 ${isOpened ? 'opacity-100 allow-scroll' : 'opacity-0 overflow-hidden'}`}>
         
         {/* Dynamic Background Environment */}
         <div className="fixed inset-0 z-0 pointer-events-none flex items-center justify-center">
@@ -83,9 +73,9 @@ export const LetterSection: React.FC = () => {
         </div>
 
         {/* The Letter Content */}
-        <div className="relative w-full z-20 pb-40 px-5 sm:px-6 md:px-20 min-h-[100dvh] pt-32">
+        <div className="relative w-full z-20 pb-40 px-5 sm:px-6 md:px-20 flex-1 pt-32">
           {/* Paper container restricting width to 90% on mobile for comfortable margins */}
-          <div className="w-[92%] max-w-2xl mx-auto font-cute text-stone-800 text-[19px] md:text-[23px] leading-[3rem] md:leading-[3.5rem] tracking-wide" style={{ textShadow: '0.2px 0.2px 0.5px rgba(0,0,0,0.05)' }}>
+          <div className="w-[92%] max-w-2xl mx-auto font-cute text-stone-800 text-[19px] md:text-[23px] leading-[3rem] md:leading-[3.5rem] tracking-wide break-words" style={{ textShadow: '0.2px 0.2px 0.5px rgba(0,0,0,0.05)' }}>
             
             <FadeInParagraph className="mb-10">Dear Baby,</FadeInParagraph>
             <FadeInParagraph className="mb-10">I don't even know where to begin.</FadeInParagraph>
@@ -445,7 +435,7 @@ const EndingSequence = ({ onComplete }: { onComplete: () => void }) => {
       initial={{ opacity: 0 }}
       onViewportEnter={() => setStarted(true)}
       viewport={{ once: true, amount: 0.8 }}
-      className="relative w-full h-[50vh] flex flex-col items-center justify-center"
+      className="relative w-full h-[50dvh] flex flex-col items-center justify-center"
     >
       {started && (
         <motion.div
@@ -588,12 +578,12 @@ const EndingSequence = ({ onComplete }: { onComplete: () => void }) => {
             onAnimationComplete={() => setTimeout(onComplete, 2000)}
             className="absolute inset-0 flex flex-col items-center justify-center overflow-hidden"
           >
-             {/* Micro-animations: Confetti, Balloons */}
-             {[...Array(6)].map((_, i) => (
-                <motion.div key={`confetti-${i}`} animate={{ y: ['-10vh', '110vh'], x: [Math.random()*100 - 50, Math.random()*100 - 50], rotate: [0, 360] }} transition={{ duration: 4 + Math.random()*3, repeat: Infinity, delay: Math.random()*2, ease: "linear" }} className="absolute w-2 h-4 rounded-sm z-10" style={{ left: `${Math.random()*100}%`, top: '-10%', backgroundColor: ['#FCA5A5', '#FCD34D', '#A7F3D0', '#C4B5FD'][i % 4] }} />
-             ))}
+             {/* Micro-animations: Confetti, Balloons (Optimized) */}
              {[...Array(3)].map((_, i) => (
-                <motion.div key={`balloon-${i}`} animate={{ y: ['110vh', '-20vh'], x: [Math.sin(i)*20, -Math.sin(i)*20] }} transition={{ duration: 6 + Math.random()*4, repeat: Infinity, delay: Math.random()*3, ease: "linear" }} className="absolute z-0 opacity-40 mix-blend-multiply" style={{ left: `${10 + Math.random()*80}%`, bottom: '-20%' }}>
+                <motion.div key={`confetti-${i}`} initial={{ y: '-10vh' }} animate={{ y: '110vh', rotate: 360 }} transition={{ duration: 4 + Math.random()*3, delay: 36 + Math.random()*2, ease: "linear" }} className="absolute w-2 h-4 rounded-sm z-10 transform-gpu" style={{ left: `${Math.random()*100}%`, backgroundColor: ['#FCA5A5', '#FCD34D', '#A7F3D0', '#C4B5FD'][i % 4] }} />
+             ))}
+             {[...Array(2)].map((_, i) => (
+                <motion.div key={`balloon-${i}`} initial={{ y: '110vh' }} animate={{ y: '-20vh' }} transition={{ duration: 6 + Math.random()*4, delay: 36 + Math.random()*3, ease: "linear" }} className="absolute z-0 opacity-40 mix-blend-multiply transform-gpu" style={{ left: `${20 + Math.random()*60}%` }}>
                   <svg width="40" height="60" viewBox="0 0 40 60" fill={['#FCA5A5', '#FCD34D', '#C4B5FD'][i % 3]}><path d="M20 0C8.954 0 0 10.745 0 24c0 14.333 16 30 20 36 4-6 20-21.667 20-36C40 10.745 31.046 0 20 0z" /></svg>
                 </motion.div>
              ))}

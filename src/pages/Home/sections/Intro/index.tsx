@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, animate } from 'framer-motion';
-import { useScroll } from '../../../../context/ScrollContext';
+
 import { useAudio } from '../../../../context/AudioContext';
 import { BACKGROUND_MUSIC_URL } from '../../../../constants/config';
 import DreamyBackground from '../../../../components/ui/DreamyBackground';
@@ -15,15 +15,7 @@ interface IntroSectionProps {
 export const IntroSection: React.FC<IntroSectionProps> = ({ onBeginJourney }) => {
   const [step, setStep] = useState<IntroStep>('loading');
   const [bgBrightness, setBgBrightness] = useState(0);
-  const { lenis, scrollTo } = useScroll();
   const { play, setTrack } = useAudio();
-
-  useEffect(() => {
-    if (!lenis) return;
-    if (step !== 'done') lenis.stop();
-    else lenis.start();
-    return () => lenis.start();
-  }, [lenis, step]);
 
   useEffect(() => {
     if (step === 'loading') {
@@ -46,11 +38,10 @@ export const IntroSection: React.FC<IntroSectionProps> = ({ onBeginJourney }) =>
       onUpdate: (latest) => setBgBrightness(latest),
     });
     if (onBeginJourney) onBeginJourney();
-    else scrollTo('#hero');
   };
 
   return (
-    <section id="intro" className="relative w-full min-h-[100svh] bg-black text-white flex flex-col justify-center items-center overflow-hidden z-50">
+    <section id="intro" className="relative flex flex-col flex-1 w-full h-full bg-black text-white justify-center items-center overflow-hidden z-50">
       <DreamyBackground brightness={bgBrightness} />
       
       <AnimatePresence mode="wait">

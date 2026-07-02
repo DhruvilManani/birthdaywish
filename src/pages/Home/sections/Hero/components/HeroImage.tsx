@@ -26,9 +26,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
         // Smoothly normalize after 3 seconds
         fadeOutTimer = setTimeout(() => {
           if (audioRef.current) {
-            let step = 0;
             normalizeInterval = setInterval(() => {
-              step++;
               if (audioRef.current && audioRef.current.volume > originalVolume) {
                 audioRef.current.volume = Math.max(originalVolume, audioRef.current.volume - 0.05);
               } else {
@@ -56,7 +54,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       >
         {/* Luxury Glass Frame */}
-        <div className="absolute inset-0 rounded-[28px] overflow-hidden bg-white/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_20px_rgba(212,175,55,0.1)] border border-golden/30 backdrop-blur-md">
+        <div className="absolute inset-0 rounded-[28px] overflow-hidden bg-white/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_20px_rgba(212,175,55,0.1)] border border-golden/30 backdrop-blur-sm">
           
           <AnimatePresence mode="wait">
             {!isRevealed ? (

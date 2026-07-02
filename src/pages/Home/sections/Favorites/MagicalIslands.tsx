@@ -108,7 +108,7 @@ export const ChildhoodIsland: React.FC = () => {
 export const CoffeeRainIsland: React.FC = () => {
   return (
     <IslandWrapper text="Coffee + Rain always felt like us." align="right">
-      <div className="relative w-64 h-64 bg-slate-800/20 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,0.1)] backdrop-blur-md border border-slate-400/30 overflow-hidden">
+      <div className="relative w-64 h-64 bg-slate-800/20 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-slate-400/30 overflow-hidden">
         {/* Rain */}
         {Array.from({ length: 15 }).map((_, i) => (
           <motion.div

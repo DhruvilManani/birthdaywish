@@ -49,78 +49,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeIndex, images.length, onClose, onChangeIndex]);
 
-  // Touch logic for Pinch to Zoom
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
 
-    let initialDist = 0;
-    let initialScale = 1;
-
-    const getDist = (touches: React.TouchList | TouchList) => {
-      return Math.hypot(
-        touches[0].clientX - touches[1].clientX,
-        touches[0].clientY - touches[1].clientY
-      );
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        initialDist = getDist(e.touches);
-        initialScale = scale;
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        e.preventDefault();
-        const dist = getDist(e.touches);
-        const newScale = Math.min(Math.max(1, initialScale * (dist / initialDist)), 3);
-        setScale(newScale);
-        imageControls.set({ scale: newScale });
-      }
-    };
-
-    const handleTouchEnd = () => {
-      if (scale < 1) {
-        setScale(1);
-        imageControls.start({ scale: 1, x: 0, y: 0, transition: { type: 'spring', bounce: 0.3 } });
-      }
-    };
-
-    container.addEventListener('touchstart', handleTouchStart, { passive: false });
-    container.addEventListener('touchmove', handleTouchMove, { passive: false });
-    container.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      container.removeEventListener('touchstart', handleTouchStart);
-      container.removeEventListener('touchmove', handleTouchMove);
-      container.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [scale, imageControls]);
-
-  // Mouse wheel logic for desktop zoom
-  const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const newScale = Math.min(Math.max(1, scale - e.deltaY * 0.01), 3);
-    setScale(newScale);
-    imageControls.start({ scale: newScale });
-    if (newScale === 1) {
-      imageControls.start({ x: 0, y: 0 });
-    }
-  };
-
-  // Double tap to zoom
-  const handleDoubleClick = () => {
-    if (scale > 1) {
-      setScale(1);
-      imageControls.start({ scale: 1, x: 0, y: 0 });
-    } else {
-      setScale(2);
-      imageControls.start({ scale: 2 });
-    }
-  };
 
   const handleDragEnd = (_e: any, info: any) => {
     if (scale === 1 && Math.abs(info.offset.y) > 100) {
@@ -129,7 +58,6 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
   };
 
   const currentImage = images[activeIndex];
-  const isZoomed = scale > 1;
 
   return (
     <motion.div
@@ -138,8 +66,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#fdfbf7]/90 backdrop-blur-md overflow-hidden"
-      onWheel={handleWheel}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#fdfbf7]/90 backdrop-blur-sm overflow-hidden"
     >
       {/* Background vignette & texture */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.2)_100%)] z-0" />
@@ -172,7 +99,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       </button>
 
       {/* Main Image Container */}
-      <div className="relative z-20 w-full max-w-[90vw] h-[80vh] flex items-center justify-center pointer-events-none">
+      <div className="relative z-20 w-full max-w-[90%] h-[80dvh] flex items-center justify-center pointer-events-none">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentImage.id}
@@ -181,15 +108,14 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
             animate={imageControls}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", bounce: 0.2, duration: 0.8 }}
-            drag={isZoomed ? true : "y"}
-            dragConstraints={isZoomed ? { top: -200, bottom: 200, left: -200, right: 200 } : { top: 0, bottom: 0 }}
-            dragElastic={isZoomed ? 0.1 : 0.8}
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={0.8}
             onDragEnd={handleDragEnd}
-            onDoubleClick={handleDoubleClick}
             className={`relative p-3 md:p-6 pb-12 md:pb-16 bg-[#fdfbf7] rounded-sm pointer-events-auto touch-none cursor-grab active:cursor-grabbing shadow-[0_25px_60px_rgba(0,0,0,0.3)] border border-stone-200/50 flex flex-col items-center justify-center ${currentImage.isFavorite ? 'border-amber-300 shadow-[0_30px_70px_rgba(251,191,36,0.2)]' : ''}`}
             style={{ maxWidth: '100%', maxHeight: '100%' }}
           >
-            <div className="relative w-full h-full max-h-[60vh] aspect-[4/5] md:aspect-auto overflow-hidden shadow-inner">
+            <div className="relative w-full h-full max-h-[60dvh] aspect-[4/5] md:aspect-auto overflow-hidden shadow-inner">
               <img loading="lazy" src={currentImage.src} 
                 alt={`Memory ${activeIndex + 1}`}
                 className="w-full h-full object-contain pointer-events-none"

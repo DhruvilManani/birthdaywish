@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
+
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 
 /* =========================================================
@@ -26,31 +26,30 @@ const InteractiveBalloon = ({ delay = 0, xOffset = 0, colorIdx = 0 }) => {
 
   return (
     <motion.div 
-      className="fixed z-[60] cursor-pointer"
-      initial={{ y: '110vh', x: xOffset }}
-      animate={popped ? { y: '-10vh' } : { y: '-20vh', x: [xOffset, xOffset + 40, xOffset - 40, xOffset] }}
-      transition={popped ? {} : { y: { duration: 15 + Math.random()*10, repeat: Infinity, delay, ease: "linear" }, x: { duration: 6 + Math.random()*4, repeat: Infinity, ease: "easeInOut" } }}
-      style={{ left: `${20 + Math.random()*60}%`, bottom: '-20%' }}
+      className="absolute z-[60] cursor-pointer transform-gpu"
+      initial={{ y: '20vh', opacity: 0 }}
+      whileInView={{ y: 0, opacity: 0.8 }}
+      viewport={{ once: true }}
+      transition={{ duration: 2, delay: delay * 0.1, ease: "easeOut" }}
+      style={{ left: `${20 + Math.random()*60}%`, bottom: `${10 + Math.random() * 20}%`, marginLeft: xOffset }}
       onClick={handlePop}
     >
       {!popped ? (
-        <svg width="60" height="80" viewBox="0 0 40 60" fill={colors[colorIdx % colors.length]} className="opacity-80 drop-shadow-md hover:scale-110 transition-transform">
+        <svg width="60" height="80" viewBox="0 0 40 60" fill={colors[colorIdx % colors.length]} className="drop-shadow-md hover:scale-110 transition-transform">
            <path d="M20 0C8.954 0 0 10.745 0 24c0 14.333 16 30 20 36 4-6 20-21.667 20-36C40 10.745 31.046 0 20 0z" />
         </svg>
       ) : (
         <div className="relative flex items-center justify-center">
-           {/* Hearts Explosion */}
-           {[...Array(8)].map((_, i) => (
-              <motion.div key={i} initial={{ scale: 0, x: 0, y: 0 }} animate={{ scale: [0, 1.5, 0], x: (Math.random()-0.5)*120, y: (Math.random()-0.5)*120 }} transition={{ duration: 0.6, ease: "easeOut" }} className="absolute text-rose-500 text-2xl drop-shadow-sm">❤️</motion.div>
+           {/* Hearts Explosion (Optimized) */}
+           {[...Array(3)].map((_, i) => (
+              <motion.div key={i} initial={{ scale: 0, x: 0, y: 0 }} animate={{ scale: [0, 1.5, 0], x: (Math.random()-0.5)*80, y: (Math.random()-0.5)*80 }} transition={{ duration: 0.6, ease: "easeOut" }} className="absolute text-rose-500 text-2xl drop-shadow-sm transform-gpu">❤️</motion.div>
            ))}
            {/* Message */}
-           <AnimatePresence>
-             {showMsg && (
-               <motion.p initial={{ opacity: 0, scale: 0.5, y: 10 }} animate={{ opacity: 1, scale: 1, y: -20 }} exit={{ opacity: 0, scale: 0.8, y: -40 }} transition={{ duration: 0.4 }} className="absolute whitespace-nowrap font-elegant italic text-rose-800 text-lg md:text-xl bg-white/80 px-5 py-2 rounded-full shadow-lg backdrop-blur-sm pointer-events-none text-center border border-rose-100">
-                 {msg}
-               </motion.p>
-             )}
-           </AnimatePresence>
+           {showMsg && (
+             <motion.p initial={{ opacity: 0, scale: 0.5, y: 10 }} animate={{ opacity: 1, scale: 1, y: -20 }} transition={{ duration: 0.4 }} className="absolute whitespace-nowrap font-elegant italic text-rose-800 text-lg md:text-xl bg-white/90 px-5 py-2 rounded-full shadow-lg pointer-events-none text-center border border-rose-100 transform-gpu">
+               {msg}
+             </motion.p>
+           )}
         </div>
       )}
     </motion.div>
@@ -142,18 +141,14 @@ const CSSLuxuryCake = () => {
          <div className="w-full h-2 bg-black/5 mt-1" />
       </div>
 
-      <AnimatePresence>
-         {phase === 1 && (
-           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: -40 }} exit={{ opacity: 0 }} className="absolute -top-24 font-elegant italic text-amber-600 text-3xl whitespace-nowrap drop-shadow-[0_0_10px_rgba(217,119,6,0.5)] z-50 bg-white/40 px-6 py-2 rounded-full backdrop-blur-sm">
-             Make a Wish...
-           </motion.div>
-         )}
-         {phase === 2 && (
-           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: -40 }} exit={{ opacity: 0 }} className="absolute -top-24 font-elegant italic text-rose-600 text-3xl whitespace-nowrap drop-shadow-[0_0_10px_rgba(225,29,72,0.3)] z-50 bg-white/40 px-6 py-2 rounded-full backdrop-blur-sm">
-             I hope every wish comes true.
-           </motion.div>
-         )}
-      </AnimatePresence>
+      <div className="absolute -top-24 w-full flex justify-center pointer-events-none">
+         <motion.div initial={{ opacity: 0 }} animate={{ opacity: phase === 1 ? 1 : 0, y: phase === 1 ? -40 : -20 }} className="absolute font-elegant italic text-amber-600 text-3xl whitespace-nowrap drop-shadow-[0_0_10px_rgba(217,119,6,0.5)] z-50 bg-white/40 px-6 py-2 rounded-full backdrop-blur-sm">
+           Make a Wish...
+         </motion.div>
+         <motion.div initial={{ opacity: 0 }} animate={{ opacity: phase === 2 ? 1 : 0, y: phase === 2 ? -40 : -20 }} className="absolute font-elegant italic text-rose-600 text-3xl whitespace-nowrap drop-shadow-[0_0_10px_rgba(225,29,72,0.3)] z-50 bg-white/40 px-6 py-2 rounded-full backdrop-blur-sm">
+           I hope every wish comes true.
+         </motion.div>
+      </div>
     </div>
   );
 };
@@ -172,22 +167,21 @@ const GiftBox = ({ title, emoji, opened, onOpen, children }: any) => {
 
   return (
     <div className="relative flex flex-col items-center min-h-[250px] w-full max-w-[320px] mx-auto">
-       <AnimatePresence>
-         {!opened && (
-           <motion.div 
-             animate={opening ? { x: [-4, 4, -4, 4, -2, 2, 0], y: [0, -3, 0] } : {}}
-             exit={{ scale: 0.8, opacity: 0, filter: 'blur(10px)', y: -30 }}
-             transition={{ duration: opening ? 0.6 : 0.8, ease: "easeInOut" }}
-             className="absolute inset-0 flex flex-col items-center cursor-pointer z-10"
-             onClick={handleOpen}
-             whileHover={!opening ? { scale: 1.05 } : {}}
-             whileTap={!opening ? { scale: 0.95 } : {}}
-           >
-             {/* Glow on open */}
-             <AnimatePresence>
-               {opening && <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1.8 }} exit={{ opacity: 0 }} transition={{ duration: 1 }} className="absolute inset-0 bg-amber-300/40 blur-[40px] rounded-full z-0" />}
-             </AnimatePresence>
-             
+       <motion.div 
+         animate={
+           opened ? { scale: 0.8, opacity: 0, filter: 'blur(10px)', y: -30, pointerEvents: 'none' } 
+           : opening ? { x: [-4, 4, -4, 4, -2, 2, 0], y: [0, -3, 0] } 
+           : {}
+         }
+         transition={{ duration: opening ? 0.6 : 0.8, ease: "easeInOut" }}
+         className="absolute inset-0 flex flex-col items-center cursor-pointer z-10"
+         onClick={handleOpen}
+         whileHover={!opening && !opened ? { scale: 1.05 } : {}}
+         whileTap={!opening && !opened ? { scale: 0.95 } : {}}
+       >
+         {/* Glow on open */}
+         <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: opening ? 1 : 0, scale: opening ? 1.8 : 0 }} transition={{ duration: 1 }} className="absolute inset-0 bg-amber-300/40 blur-[40px] rounded-full z-0 pointer-events-none" />
+         
              {/* Luxury Gift Box */}
              <div className="w-40 h-40 bg-gradient-to-br from-rose-100 to-pink-200 rounded-lg shadow-xl border border-white/60 relative flex items-center justify-center group overflow-hidden z-10">
                 {/* Ribbons */}
@@ -206,9 +200,7 @@ const GiftBox = ({ title, emoji, opened, onOpen, children }: any) => {
                {emoji} {title}
              </p>
              <p className="text-xs text-stone-400 mt-2 uppercase tracking-widest z-10">Tap to open</p>
-           </motion.div>
-         )}
-       </AnimatePresence>
+       </motion.div>
 
        <motion.div 
          initial={{ opacity: 0, scale: 0.8, y: 30 }}
@@ -222,16 +214,17 @@ const GiftBox = ({ title, emoji, opened, onOpen, children }: any) => {
   );
 };
 
+const wishes = [
+  "I hope your smile never fades.",
+  "I hope every dream comes true.",
+  "I hope life always stays kind to you.",
+  "I hope you always stay this adorable.",
+  "I hope every birthday becomes even more beautiful.",
+  "I'll always celebrate your happiness.",
+  "I'll always stand beside you."
+];
+
 const WishesCycler = () => {
-  const wishes = [
-    "I hope your smile never fades.",
-    "I hope every dream comes true.",
-    "I hope life always stays kind to you.",
-    "I hope you always stay this adorable.",
-    "I hope every birthday becomes even more beautiful.",
-    "I'll always celebrate your happiness.",
-    "I'll always stand beside you."
-  ];
   const [idx, setIdx] = useState(0);
 
   useEffect(() => {
@@ -266,27 +259,17 @@ export const BirthdaySection: React.FC = () => {
   const allGiftsOpened = gifts.g1 && gifts.g2 && gifts.g3 && gifts.g4;
   
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setChapterComplete } = useNavigation();
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    
-    // Near the bottom
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      setChapterComplete(true);
-    }
-  };
+
 
   const endingRef = useRef<HTMLDivElement>(null);
   const endingInView = useInView(endingRef, { amount: 0.6 });
 
   return (
-    <SectionWrapper id="birthday" background="none" fullHeight={false} className="p-0 bg-[#FDFBF7] overflow-hidden h-[100dvh]">
+    <SectionWrapper id="birthday" background="none" fullHeight={false} className="p-0 bg-[#FDFBF7] overflow-hidden">
       <div 
         ref={containerRef}
-        onScroll={handleScroll}
-        className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth"
+        className="relative flex flex-col flex-1 w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth"
       >
        
        {/* Background Environment */}
@@ -437,7 +420,7 @@ export const BirthdaySection: React.FC = () => {
                     <div className="bg-white p-3 md:p-4 pb-12 md:pb-16 rounded-sm shadow-2xl rotate-2 transition-transform hover:rotate-0 duration-500 relative">
                        {/* Polaroid sparkle */}
                        <motion.div animate={{ opacity: [0, 1, 0], scale: [0.5, 1.2, 0.5] }} transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }} className="absolute -top-2 -right-2 text-amber-400 text-xl drop-shadow-md">✨</motion.div>
-                       <img src="/images/memories/001.jpg" alt="Our Memory" className="w-64 h-64 md:w-80 md:h-80 object-cover rounded-sm shadow-inner" />
+                       <img loading="lazy" src="/images/memories/001.jpg" alt="Our Memory" className="w-64 h-64 md:w-80 md:h-80 object-cover rounded-sm shadow-inner" />
                     </div>
                     <p className="mt-12 font-elegant italic text-stone-700 text-xl md:text-2xl text-center leading-relaxed">
                       My favourite memory...<br/>is every memory with you.
@@ -524,12 +507,11 @@ export const BirthdaySection: React.FC = () => {
 
                  <motion.div 
                    className="w-full flex flex-col items-center justify-center cursor-pointer group"
-                   onClick={() => setChapterComplete(true)}
                  >
                     <motion.div 
                       animate={{ y: [0, 15, 0] }} 
                       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }} 
-                      className="w-14 h-14 rounded-full bg-rose-100/80 backdrop-blur-md flex items-center justify-center shadow-[0_0_20px_rgba(251,113,133,0.4)] border border-rose-300/50 group-hover:bg-rose-200 transition-colors"
+                      className="w-14 h-14 rounded-full bg-rose-100/80 backdrop-blur-sm flex items-center justify-center shadow-[0_0_20px_rgba(251,113,133,0.4)] border border-rose-300/50 group-hover:bg-rose-200 transition-colors"
                     >
                       <svg className="w-8 h-8 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -539,7 +521,7 @@ export const BirthdaySection: React.FC = () => {
               </motion.div>
             )}
           </AnimatePresence>
-          <div ref={endingRef} className="h-[20vh] w-full" />
+          <div ref={endingRef} className="h-[20dvh] w-full" />
        </div>
       </div>
     </SectionWrapper>

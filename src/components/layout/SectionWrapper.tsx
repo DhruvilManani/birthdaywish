@@ -29,19 +29,16 @@ export const SectionWrapper: React.FC<SectionWrapperProps> = ({
     <section
       id={id}
       className={cn(
-        'relative w-full flex flex-col justify-center px-6 py-12 md:py-24 overflow-hidden',
-        fullHeight && 'min-h-[100svh]',
+        'relative flex flex-col flex-1 w-full h-full px-6 py-12 md:py-24 overflow-y-auto overflow-x-hidden',
         bgClasses[background],
         className
       )}
       {...props}
     >
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true, amount: 0.15 }}
+        animate={{ opacity: 1 }}
         transition={{ duration: 1.0 }}
-        className="w-full max-w-lg mx-auto flex flex-col items-center text-center relative z-10"
+        className="flex flex-col flex-1 w-full max-w-lg mx-auto items-center text-center relative z-10"
       >
         {children}
       </motion.div>

@@ -1,34 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
+
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { ScrapbookFlow } from './ScrapbookFlow';
 
 export const GallerySection: React.FC = () => {
-  const { setChapterComplete } = useNavigation();
 
-  useEffect(() => {
-    // Gallery completes after user views it or after a set time (12s is enough to view the start)
-    const timer = setTimeout(() => {
-      setChapterComplete(true);
-    }, 12000);
-    return () => clearTimeout(timer);
-  }, [setChapterComplete]);
+
 
   return (
     <SectionWrapper id="gallery" background="none" fullHeight={false} className="h-full p-0 py-0 md:py-0 relative overflow-hidden bg-[#fdfbf7]">
       
-      <div className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
+      <div className="relative flex flex-col flex-1 w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
         
         {/* Paper Texture Background */}
-        <div className="absolute top-0 left-0 w-full min-h-[500vh] pointer-events-none opacity-[0.4] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
+        <div className="absolute top-0 left-0 w-full min-h-[500dvh] pointer-events-none opacity-[0.4] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
 
         {/* Dynamic Light Leaks (Sun Rays) */}
         <div className="sticky top-0 w-full h-[100dvh] overflow-hidden pointer-events-none z-0">
           <motion.div 
             animate={{ opacity: [0.1, 0.3, 0.1], scale: [1, 1.1, 1], rotate: [0, 5, 0] }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-20%] right-[-10%] w-[120vw] h-[100dvh] bg-[#fcd34d]/20 blur-[150px] rounded-full pointer-events-none transform origin-top-right mix-blend-overlay"
+            className="absolute top-[-20%] right-[-10%] w-[120%] h-[100dvh] bg-[#fcd34d]/20  rounded-full pointer-events-none transform origin-top-right mix-blend-overlay"
           />
           {/* Light particles */}
           {Array.from({ length: 15 }).map((_, i) => (
@@ -82,7 +75,6 @@ export const GallerySection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 2, ease: "easeOut" }}
-            onClick={() => setChapterComplete(true)}
           >
             <h3 className="font-elegant text-3xl md:text-5xl text-stone-800 leading-relaxed drop-shadow-sm group-hover:scale-105 transition-transform duration-700">
               Every picture <br />

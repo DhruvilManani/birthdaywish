@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import { HandwrittenNote, MiniStar, SoftButterfly } from '../ChapterTwo/InteractiveDecorations';
-import { useNavigation } from '../../../../context/NavigationContext';
+
 
 // A beautifully blended image that fades into the background seamlessly
 const BlendedImage: React.FC<{ src: string; alt: string; className?: string }> = ({ src, alt, className = "" }) => {
@@ -13,10 +13,10 @@ const BlendedImage: React.FC<{ src: string; alt: string; className?: string }> =
       transition={{ duration: 2, ease: "easeOut" }}
       className={`relative w-full max-w-2xl mx-auto flex justify-center items-center ${className}`}
     >
-      <img 
+      <img loading="lazy" 
         src={src} 
         alt={alt}
-        className="w-full h-auto object-cover max-h-[70vh] mix-blend-multiply"
+        className="w-full h-auto object-cover max-h-[70dvh] mix-blend-multiply"
         style={{
           // This creates a radial gradient mask to perfectly fade the edges into nothing
           WebkitMaskImage: 'radial-gradient(ellipse at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 80%)',
@@ -96,7 +96,6 @@ const FloatingSentence: React.FC<{ text: string; delay?: number; align?: 'left'|
 
 export const VisualMoments: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setChapterComplete } = useNavigation();
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -106,10 +105,9 @@ export const VisualMoments: React.FC = () => {
   useEffect(() => {
     return scrollYProgress.on("change", (latest) => {
       if (latest > 0.98) {
-        setChapterComplete(true);
       }
     });
-  }, [scrollYProgress, setChapterComplete]);
+  }, [scrollYProgress]);
 
   return (
     <div ref={containerRef} className="w-full max-w-4xl mx-auto flex flex-col items-center pb-32 relative z-10">
@@ -159,7 +157,6 @@ export const VisualMoments: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 2, ease: "easeOut" }}
-        onClick={() => setChapterComplete(true)}
       >
         <h3 className="font-elegant text-4xl md:text-6xl text-rose-900 leading-relaxed drop-shadow-sm group-hover:scale-105 transition-transform duration-700">
           And then... <br />

@@ -6,7 +6,7 @@ import { VerticalStoryFlow } from './VerticalStoryFlow';
 export const ChapterTwoSection: React.FC = () => {
   return (
     <SectionWrapper id="chapter-two" background="none" fullHeight={false} className="h-full p-0 py-0 md:py-0">
-      <div className="relative w-full h-full overflow-hidden">
+      <div className="relative flex-1 flex flex-col w-full h-full">
         
         {/* Reusing Hero/ChapterOne Background for perfect consistency */}
         <HeroBackground />

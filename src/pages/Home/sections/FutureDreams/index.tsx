@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
+import { motion, useInView } from 'framer-motion';
+
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { DreamScene } from './components/DreamScene';
 
@@ -39,16 +39,8 @@ export const FutureDreamsSection: React.FC = () => {
   const [interactions, setInteractions] = useState<Record<string, boolean>>({});
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setChapterComplete } = useNavigation();
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      setChapterComplete(true);
-    }
-  };
+
 
   const trigger = (key: string) => {
     setInteractions(prev => ({ ...prev, [key]: true }));
@@ -58,16 +50,16 @@ export const FutureDreamsSection: React.FC = () => {
   };
 
   return (
-    <SectionWrapper id="future-dreams" background="none" fullHeight={false} className="p-0 bg-[#0B1021] overflow-hidden">
+    <SectionWrapper id="future-dreams" background="none" fullHeight={false} className="p-0 bg-[#0B1021]">
       
       {/* Scrollable Container */}
-      <div ref={containerRef} onScroll={handleScroll} className="relative w-full h-[100dvh] overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
+      <div ref={containerRef} className="relative flex flex-col flex-1 w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
         
         {/* Deep space background */}
-        <div className="fixed top-0 left-0 w-full h-[100vh] pointer-events-none opacity-[0.35] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
+        <div className="fixed top-0 left-0 w-full h-[100dvh] pointer-events-none opacity-[0.35] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
 
         {/* Intro */}
-        <div className="w-full min-h-[90vh] md:min-h-screen flex flex-col items-center justify-center relative snap-start">
+        <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center relative snap-start">
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
             {[...Array(10)].map((_, i) => (
               <motion.div 
@@ -108,17 +100,17 @@ export const FutureDreamsSection: React.FC = () => {
           onSceneTap={() => trigger('snow')}
         >
           {/* Mist */}
-          <motion.div animate={{ x: [-50, 50, -50] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute bottom-20 left-0 w-[150vw] h-64 bg-white/10 blur-3xl pointer-events-none will-change-transform" />
+          <motion.div animate={{ x: [-50, 50, -50] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute bottom-20 left-0 w-[150%] h-64 bg-white/10  pointer-events-none will-change-transform" />
           {/* Chimney Smoke */}
-          <motion.div animate={{ y: [-10, -50], opacity: [0, 0.4, 0], scale: [1, 1.5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }} className="absolute top-1/4 right-1/3 w-16 h-32 bg-gray-200/20 blur-xl rounded-full pointer-events-none will-change-transform" />
+          <motion.div animate={{ y: [-10, -50], opacity: [0, 0.4, 0], scale: [1, 1.5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeOut" }} className="absolute top-1/4 right-1/3 w-16 h-32 bg-gray-200/20 blur-md rounded-full pointer-events-none will-change-transform" />
           {/* Window Glow */}
-          <motion.div animate={{ opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-amber-400/20 blur-3xl pointer-events-none will-change-transform" />
+          <motion.div animate={{ opacity: [0.3, 0.6, 0.3] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-amber-400/20  pointer-events-none will-change-transform" />
           {/* Snow Animation */}
           {[...Array(interactions['snow'] ? 20 : 10)].map((_, i) => (
             <motion.div 
               key={`snow-${i}`}
               initial={{ opacity: 0, y: -20, x: `${Math.random() * 100}vw` }}
-              animate={{ opacity: [0, 0.8, 0], y: '100vh', x: `${Math.random() * 100}vw` }}
+              animate={{ opacity: [0, 0.8, 0], y: '100dvh', x: `${Math.random() * 100}vw` }}
               transition={{ duration: (interactions['snow'] ? 2 : 5) + Math.random() * 5, repeat: Infinity, ease: "linear", delay: Math.random() * 5 }}
               className="absolute w-1.5 h-1.5 bg-white rounded-full blur-[1px] will-change-transform"
             />
@@ -145,7 +137,7 @@ export const FutureDreamsSection: React.FC = () => {
           <motion.div 
             animate={interactions['ocean'] ? { y: [0, -10, 0], opacity: [0.1, 0.5, 0.1], scale: [1, 1.05, 1] } : { y: [0, 20, 0], opacity: [0.1, 0.3, 0.1] }}
             transition={{ duration: interactions['ocean'] ? 2 : 4, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-0 w-[150vw] left-[-25vw] h-48 bg-gradient-to-t from-blue-300/20 to-transparent blur-md will-change-transform"
+            className="absolute bottom-0 w-[150%] left-[-25vw] h-48 bg-gradient-to-t from-blue-300/20 to-transparent blur-md will-change-transform"
           />
         </DreamScene>
 
@@ -164,15 +156,13 @@ export const FutureDreamsSection: React.FC = () => {
             <motion.div key={`streak-${i}`} animate={{ y: ['-10%', '110%'], opacity: [0, 0.5, 0] }} transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 5 }} className="absolute top-0 w-1 h-32 bg-white/10 blur-[1px] will-change-transform" style={{ left: `${10 + Math.random() * 80}%` }} />
           ))}
           {/* Coffee Steam */}
-          <AnimatePresence>
-            <motion.div animate={{ y: [-10, -60], opacity: [0, interactions['coffee'] ? 0.6 : 0.3, 0], scale: [1, interactions['coffee'] ? 2 : 1.5], x: [0, interactions['coffee'] ? 15 : 10] }} transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }} className="absolute bottom-1/4 left-1/3 w-8 h-24 bg-white/20 blur-xl rounded-full pointer-events-none will-change-transform" />
-          </AnimatePresence>
+          <motion.div animate={{ y: [-10, -60], opacity: [0, interactions['coffee'] ? 0.6 : 0.3, 0], scale: [1, interactions['coffee'] ? 2 : 1.5], x: [0, interactions['coffee'] ? 15 : 10] }} transition={{ duration: 3, repeat: Infinity, ease: "easeOut" }} className="absolute bottom-1/4 left-1/3 w-8 h-24 bg-white/20 blur-md rounded-full pointer-events-none will-change-transform" />
           {/* Rain Animation */}
           {[...Array(15)].map((_, i) => (
             <motion.div 
               key={`rain-${i}`}
               initial={{ opacity: 0, y: -50, x: `${Math.random() * 120}vw` }}
-              animate={{ opacity: [0, 0.4, 0], y: '100vh', x: `+=${Math.random() * 50 - 25}vw` }}
+              animate={{ opacity: [0, 0.4, 0], y: '100dvh', x: `+=${Math.random() * 50 - 25}vw` }}
               transition={{ duration: 1 + Math.random(), repeat: Infinity, ease: "linear", delay: Math.random() * 2 }}
               className="absolute w-[1px] h-8 bg-blue-100/50 rotate-12 will-change-transform"
             />
@@ -188,7 +178,7 @@ export const FutureDreamsSection: React.FC = () => {
           onSceneTap={() => trigger('candle')}
         >
           {/* Breathing Lights & Candles */}
-          <motion.div animate={{ opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/4 left-1/4 w-64 h-64 bg-amber-400/20 blur-3xl pointer-events-none will-change-transform" />
+          <motion.div animate={{ opacity: [0.2, 0.4, 0.2] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/4 left-1/4 w-64 h-64 bg-amber-400/20  pointer-events-none will-change-transform" />
           <motion.div animate={interactions['candle'] ? { scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] } : { opacity: [0.4, 0.7, 0.4] }} transition={{ duration: interactions['candle'] ? 0.5 : 2, repeat: Infinity }} className="absolute bottom-1/4 right-1/4 w-8 h-8 bg-orange-400/40 blur-md rounded-full pointer-events-none will-change-transform" />
           
           {/* Moving Plants / Curtains Illusion */}
@@ -215,16 +205,16 @@ export const FutureDreamsSection: React.FC = () => {
           onSceneTap={() => trigger('butterfly')}
         >
           {/* Sunlight Rays */}
-          <motion.div animate={{ x: [-20, 20, -20], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-[150vw] h-full bg-gradient-to-br from-amber-200/10 via-transparent to-transparent rotate-12 transform-origin-top-left pointer-events-none will-change-transform" />
+          <motion.div animate={{ x: [-20, 20, -20], opacity: [0.1, 0.2, 0.1] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-[150%] h-full bg-gradient-to-br from-amber-200/10 via-transparent to-transparent rotate-12 transform-origin-top-left pointer-events-none will-change-transform" />
           
-          {/* Butterfly Animation */}
-          {[...Array(interactions['butterfly'] ? 6 : 3)].map((_, i) => (
+          {/* Butterfly Animation (Optimized) */}
+          {[...Array(interactions['butterfly'] ? 2 : 1)].map((_, i) => (
             <motion.div 
-              key={`butterfly-${i}`}
-              initial={{ opacity: 0, y: `${50 + Math.random() * 50}vh`, x: `${Math.random() * 100}vw`, scale: 0.5 }}
-              animate={{ opacity: [0, 1, 0], y: interactions['butterfly'] ? '-=60vh' : '-=40vh', x: `${Math.random() > 0.5 ? '+' : '-'}=30vw`, scale: [0.5, 1, 0.5] }}
-              transition={{ duration: interactions['butterfly'] ? 2 + Math.random() * 2 : 6 + Math.random() * 4, repeat: Infinity, ease: "easeInOut", delay: Math.random() * (interactions['butterfly'] ? 0.5 : 8) }}
-              className="absolute text-xl will-change-transform"
+              key={`butterfly-${i}-${interactions['butterfly']}`}
+              initial={{ opacity: 0, y: `${80}vh`, x: `${30 + Math.random() * 40}vw`, scale: 0.5 }}
+              animate={{ opacity: [0, 1, 0], y: '-=40vh', x: `${Math.random() > 0.5 ? '+' : '-'}=20vw`, scale: [0.5, 1, 0.5] }}
+              transition={{ duration: 4 + Math.random() * 2, ease: "easeInOut", delay: Math.random() * 0.5 }}
+              className="absolute text-xl transform-gpu"
             >
               🦋
             </motion.div>
@@ -239,10 +229,10 @@ export const FutureDreamsSection: React.FC = () => {
           quote={<>"Success means nothing...<br/><br/>unless I celebrate it with you."</>}
         >
           {/* Sunlight Sweeping Reflection & Lens Flare */}
-          <motion.div animate={{ x: ['-100vw', '200vw'], opacity: [0, 0.5, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-1/3 left-0 w-[20vw] h-64 bg-white/10 blur-2xl rotate-45 pointer-events-none will-change-transform" />
+          <motion.div animate={{ x: ['-100%', '200vw'], opacity: [0, 0.5, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-1/3 left-0 w-[20%] h-64 bg-white/10  rotate-45 pointer-events-none will-change-transform" />
           <motion.div animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.2, 1] }} transition={{ duration: 5, repeat: Infinity }} className="absolute top-1/4 right-1/4 w-32 h-32 bg-amber-300/30 blur-[40px] rounded-full pointer-events-none mix-blend-screen will-change-transform" />
           {/* Moving Clouds / Dust */}
-          <motion.div animate={{ x: [0, -100] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute bottom-10 left-1/4 w-full h-32 bg-stone-400/10 blur-3xl pointer-events-none will-change-transform" />
+          <motion.div animate={{ x: [0, -100] }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute bottom-10 left-1/4 w-full h-32 bg-stone-400/10  pointer-events-none will-change-transform" />
         </DreamScene>
 
         {/* SCENE 7: Growing Old */}
@@ -263,7 +253,7 @@ export const FutureDreamsSection: React.FC = () => {
             <motion.div 
               key={`leaf-${i}`}
               initial={{ opacity: 0, y: -20, x: `${Math.random() * 100}vw`, rotate: 0 }}
-              animate={{ opacity: [0, 0.8, 0], y: '100vh', x: `+=${Math.random() * 60}vw`, rotate: 360 }}
+              animate={{ opacity: [0, 0.8, 0], y: '100dvh', x: `+=${Math.random() * 60}vw`, rotate: 360 }}
               transition={{ duration: 8 + Math.random() * 5, repeat: Infinity, ease: "linear", delay: Math.random() * 10 }}
               className="absolute text-sm text-stone-600/50 will-change-transform"
             >
@@ -285,7 +275,7 @@ export const FutureDreamsSection: React.FC = () => {
         </DreamScene>
 
         {/* FINAL PROMISE */}
-        <div className="w-full min-h-[90vh] md:min-h-screen flex flex-col items-center justify-center relative snap-start text-center px-4">
+        <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center relative snap-start text-center px-4">
           <EmotionalQuote className="absolute inset-0 pointer-events-none">
              {/* We use EmotionalQuote here just to trigger the volume dip for the final scene */}
           </EmotionalQuote>
@@ -322,7 +312,6 @@ export const FutureDreamsSection: React.FC = () => {
             </h3>
 
             <motion.div 
-              onClick={() => setChapterComplete(true)}
               className="mt-24 flex flex-col items-center cursor-pointer group"
             >
               <motion.div className="relative text-5xl md:text-6xl text-amber-500/80 drop-shadow-lg mb-8" animate={{ scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}>

@@ -1,35 +1,23 @@
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { PrincessParticles } from './PrincessParticles';
 import { PinkRosesIsland, PandaIsland, ChildhoodIsland, CoffeeRainIsland, BeachIsland, CastleIsland, DinnerIsland } from './MagicalIslands';
 
 export const FavoritesSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setChapterComplete } = useNavigation();
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    
-    // Near the bottom (e.g., within 50px)
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      setChapterComplete(true);
-    }
-  };
 
   return (
     <SectionWrapper id="favorites" background="none" fullHeight={false} className="h-full p-0 py-0 md:py-0 relative overflow-hidden bg-[#fff0f5]">
       
       <div 
         ref={containerRef} 
-        onScroll={handleScroll}
-        className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth"
+        className="relative flex flex-col flex-1 w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth"
       >
         
         {/* Sky Background Gradient */}
-        <div className="absolute top-0 left-0 w-full min-h-[500vh] bg-gradient-to-b from-[#fff0f5] via-[#ffe4e1] to-[#fff0f5] opacity-100 z-0 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full min-h-[500dvh] bg-gradient-to-b from-[#fff0f5] via-[#ffe4e1] to-[#fff0f5] opacity-100 z-0 pointer-events-none" />
         
         {/* Particles Engine */}
         <div className="sticky top-0 w-full h-[100dvh] pointer-events-none z-10">
@@ -87,7 +75,6 @@ export const FavoritesSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 2, ease: "easeOut" }}
-            onClick={() => setChapterComplete(true)}
           >
             <h3 className="font-elegant text-4xl md:text-6xl text-pink-950 leading-relaxed drop-shadow-sm group-hover:scale-105 transition-transform duration-700">
               And somehow... <br /><br />

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
+
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { SafeImage } from './components/SafeImage';
 import { TimelineBlock } from './components/TimelineBlock';
@@ -47,17 +47,8 @@ const EmotionalQuote: React.FC<{ children: React.ReactNode, className?: string }
 
 export const RelationshipSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const { setChapterComplete } = useNavigation();
 
-  const handleScroll = () => {
-    if (!containerRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
-    
-    // Near the bottom (e.g., within 50px)
-    if (scrollTop + clientHeight >= scrollHeight - 50) {
-      setChapterComplete(true);
-    }
-  };
+
 
   const staggerContainer = {
     hidden: { opacity: 0 },
@@ -66,14 +57,14 @@ export const RelationshipSection: React.FC = () => {
 
   return (
     <SectionWrapper id="relationship" background="none" fullHeight={false} className="h-full p-0 py-0 md:py-0 relative overflow-hidden bg-[#fdfbf7]">
-      <div ref={containerRef} onScroll={handleScroll} className="relative w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
+      <div ref={containerRef} className="relative flex flex-col flex-1 w-full h-full overflow-y-auto overflow-x-hidden allow-scroll scroll-smooth">
         
         {/* Paper Texture Background */}
-        <div className="absolute top-0 left-0 w-full min-h-[500vh] pointer-events-none opacity-[0.35] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
+        <div className="absolute top-0 left-0 w-full min-h-[500dvh] pointer-events-none opacity-[0.35] mix-blend-multiply z-0" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }} />
 
         {/* Sunlight Leaks */}
-        <div className="fixed top-[-10%] right-[-10%] w-[50vw] h-[50vh] bg-[#fff5d1]/30 blur-[120px] rounded-full pointer-events-none z-0" />
-        <div className="fixed bottom-[-10%] left-[-10%] w-[50vw] h-[50vh] bg-[#f9dec9]/20 blur-[120px] rounded-full pointer-events-none z-0" />
+        <div className="fixed top-[-10%] right-[-10%] w-[50%] h-[50dvh] bg-[#fff5d1]/30  rounded-full pointer-events-none z-0" />
+        <div className="fixed bottom-[-10%] left-[-10%] w-[50%] h-[50dvh] bg-[#f9dec9]/20  rounded-full pointer-events-none z-0" />
 
         <div className="absolute top-0 w-full flex flex-col items-center pt-32 z-20 pb-32">
           
@@ -108,7 +99,7 @@ export const RelationshipSection: React.FC = () => {
               <div className="absolute inset-0 bg-stone-100 flex items-center justify-center">
                 <SafeImage src="/images/relationship/001.jpg" alt="Officially Us" className="w-full h-full object-cover" />
               </div>
-              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-6 py-4 rounded-sm shadow-lg flex flex-col items-center">
+              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-6 py-4 rounded-sm shadow-lg flex flex-col items-center">
                 <p className="font-cute text-stone-400 text-xs tracking-widest uppercase mb-1">MAY</p>
                 <p className="font-elegant text-3xl text-stone-800">1</p>
                 <p className="font-cute text-stone-400 text-[10px] tracking-widest uppercase mt-1">2025</p>
@@ -199,7 +190,6 @@ export const RelationshipSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 2, ease: "easeOut" }}
-            onClick={() => setChapterComplete(true)}
           >
             {/* Background brightens slightly at the end */}
             <motion.div 

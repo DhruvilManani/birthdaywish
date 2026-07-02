@@ -21,12 +21,12 @@ export const HeroBackground: React.FC = () => {
       {/* Layer 2: Moving clouds (Very soft blur blobs) */}
       <motion.div style={{ y: yClouds }} className="absolute inset-0 opacity-20 will-change-transform">
         <motion.div 
-          className="absolute top-[-5%] left-[-10%] w-[70%] h-[50%] bg-white rounded-full blur-[140px]"
+          className="absolute top-[-5%] left-[-10%] w-[70%] h-[50%] bg-white rounded-full "
           animate={{ x: [0, 40, 0], y: [0, 15, 0] }}
           transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div 
-          className="absolute top-[20%] right-[-10%] w-[60%] h-[40%] bg-soft-pink-light rounded-full blur-[120px]"
+          className="absolute top-[20%] right-[-10%] w-[60%] h-[40%] bg-soft-pink-light rounded-full "
           animate={{ x: [0, -30, 0], y: [0, -20, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut", delay: 2 }} 
         />

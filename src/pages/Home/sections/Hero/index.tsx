@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
-import { useNavigation } from '../../../../context/NavigationContext';
 import { SectionWrapper } from '../../../../components/layout/SectionWrapper';
 import { HeroBackground } from './components/HeroBackground';
 import { HeroImage } from './components/HeroImage';
@@ -11,15 +10,7 @@ import { HeroDecorations } from './components/HeroDecorations';
 export const HeroSection: React.FC = () => {
   const pointerX = useMotionValue(typeof window !== 'undefined' ? window.innerWidth / 2 : 0);
   const pointerY = useMotionValue(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
-  const { setChapterComplete } = useNavigation();
 
-  useEffect(() => {
-    // Hero complete after initial entry animations (~5.5s)
-    const timer = setTimeout(() => {
-      setChapterComplete(true);
-    }, 5500);
-    return () => clearTimeout(timer);
-  }, [setChapterComplete]);
 
   useEffect(() => {
     const handlePointerMove = (e: PointerEvent) => {
@@ -33,7 +24,7 @@ export const HeroSection: React.FC = () => {
 
   return (
     <SectionWrapper id="hero" background="none" fullHeight>
-      <div className="relative w-full min-height-screen-safe flex flex-col overflow-hidden pt-safe pb-safe">
+      <div className="relative flex-1 flex flex-col justify-center items-center w-full">
         
         {/* Entry Sequence Fade-in Overlay (simulating clouds parting / gold light) */}
         <motion.div 

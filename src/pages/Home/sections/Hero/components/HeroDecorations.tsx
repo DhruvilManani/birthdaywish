@@ -62,7 +62,7 @@ export const HeroDecorations: React.FC<HeroDecorationsProps> = ({ pointerX, poin
 
       {/* Elegant Floating Orbs */}
       <motion.div 
-        className="absolute top-[75%] right-[15%] w-16 h-16 rounded-full bg-gradient-to-tr from-rose-light/10 to-golden/10 border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)] backdrop-blur-md will-change-transform"
+        className="absolute top-[75%] right-[15%] w-16 h-16 rounded-full bg-gradient-to-tr from-rose-light/10 to-golden/10 border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.1)] backdrop-blur-sm will-change-transform"
         animate={{ y: [0, -30, 0], x: [0, -10, 0] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
       />

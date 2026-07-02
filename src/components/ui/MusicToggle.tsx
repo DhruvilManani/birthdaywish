@@ -20,7 +20,7 @@ export const MusicToggle: React.FC<MusicToggleProps> = ({ className }) => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       className={cn(
-        'fixed bottom-6 right-6 z-50',
+        'absolute bottom-6 right-6 z-50',
         'w-12 h-12 md:w-14 h-14',
         'glass-panel shadow-glass border border-white/40',
         'rounded-full flex items-center justify-center cursor-pointer group',

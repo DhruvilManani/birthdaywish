@@ -16,7 +16,6 @@ import FutureDreamsSection from './sections/FutureDreams';
 import BirthdaySection from './sections/Birthday';
 import GrandFinaleSection from './sections/GrandFinale';
 import { StorybookManager } from './StorybookManager';
-import { NavigationProvider } from '../../context/NavigationContext';
 
 export const HomePage: React.FC = () => {
   const [isIntroComplete, setIsIntroComplete] = useState(false);
@@ -27,8 +26,8 @@ export const HomePage: React.FC = () => {
     { id: 'hero', component: HeroSection },
     { id: 'timeline', component: TimelineSection },
     { id: 'chapter1', component: ChapterOneSection },
-    { id: 'chapter3', component: ChapterThreeSection },
     { id: 'chapter2', component: ChapterTwoSection },
+    { id: 'chapter3', component: ChapterThreeSection },
     { id: 'gallery', component: GallerySection },
     { id: 'relationship', component: RelationshipSection },
     { id: 'proposal', component: ProposalSection },
@@ -45,7 +44,7 @@ export const HomePage: React.FC = () => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className="w-full h-[100dvh] bg-[#1a1a1a] overflow-hidden"
+      className="flex flex-col flex-1 w-full h-full bg-[#1a1a1a]"
     >
       <AnimatePresence mode="wait">
         {!isIntroComplete ? (
@@ -65,9 +64,7 @@ export const HomePage: React.FC = () => {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="w-full h-full relative"
           >
-            <NavigationProvider>
-              <StorybookManager pages={storybookPages} />
-            </NavigationProvider>
+            <StorybookManager pages={storybookPages} />
           </motion.div>
         )}
       </AnimatePresence>

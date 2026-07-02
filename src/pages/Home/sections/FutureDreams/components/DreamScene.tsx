@@ -27,7 +27,7 @@ export const DreamScene: React.FC<DreamSceneProps> = ({
       id={id} 
       ref={ref} 
       onClick={onSceneTap}
-      className={`relative w-full min-h-[90vh] md:min-h-[100dvh] flex flex-col items-center justify-center py-24 px-4 overflow-hidden snap-start ${onSceneTap ? 'cursor-pointer' : ''}`}
+      className={`relative w-full min-h-[90dvh] md:min-h-[100dvh] flex flex-col items-center justify-center py-24 px-4 overflow-hidden snap-start ${onSceneTap ? 'cursor-pointer' : ''}`}
     >
       {/* Background Image with Mask and Continuous Slow Zoom */}
       <motion.div 
