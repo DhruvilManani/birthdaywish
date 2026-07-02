@@ -55,7 +55,7 @@ export const ScrapbookPhoto: React.FC<ScrapbookPhotoProps> = ({
       transition={{ duration, delay, type: "spring", bounce: 0.2 }}
       whileHover={{ scale: 1.03, rotate: rotation + (Math.random() > 0.5 ? 2 : -2), y: -10, transition: { duration: 0.4, ease: "easeOut" } }}
       whileTap={{ scale: 1.03, rotate: rotation + 1, y: -10 }}
-      className={`relative ${sizeClasses[size]} ${alignClasses[alignment]} my-8 md:my-16 cursor-pointer will-change-transform z-10 hover:z-30`}
+      className={`relative ${sizeClasses[size]} max-w-[85vw] ${alignClasses[alignment]} my-8 md:my-16 cursor-pointer transform-gpu z-10 hover:z-30`}
     >
       {/* The Polaroid Container */}
       <div className={`bg-[#fdfbf7] p-3 md:p-4 pb-8 md:pb-12 rounded-sm relative transition-shadow duration-300 ${isFavorite ? 'border-2 border-amber-300 shadow-[0_20px_50px_rgba(251,191,36,0.3)] hover:shadow-[0_25px_60px_rgba(251,191,36,0.5)]' : 'border border-stone-200/50 shadow-[0_15px_35px_rgba(0,0,0,0.15)] hover:shadow-[0_25px_50px_rgba(0,0,0,0.25)]'}`}>

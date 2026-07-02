@@ -99,7 +99,7 @@ export const RelationshipSection: React.FC = () => {
               <div className="absolute inset-0 bg-stone-100 flex items-center justify-center">
                 <SafeImage src="/images/relationship/001.jpg" alt="Officially Us" className="w-full h-full object-cover" />
               </div>
-              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-6 py-4 rounded-sm shadow-lg flex flex-col items-center">
+              <div className="absolute bottom-4 left-4 bg-white/90 backdrop- px-6 py-4 rounded-sm shadow-lg flex flex-col items-center">
                 <p className="font-cute text-stone-400 text-xs tracking-widest uppercase mb-1">MAY</p>
                 <p className="font-elegant text-3xl text-stone-800">1</p>
                 <p className="font-cute text-stone-400 text-[10px] tracking-widest uppercase mt-1">2025</p>
@@ -210,7 +210,7 @@ export const RelationshipSection: React.FC = () => {
             <motion.div className="relative mt-24 mb-12 text-4xl text-amber-500/80 drop-shadow-lg" animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
               💛
               {/* Gathering golden particles */}
-              <motion.div animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 2] }} transition={{ duration: 2, repeat: Infinity, delay: 0.5 }} className="absolute inset-0 bg-amber-400 blur-[20px] z-[-1]" />
+              <motion.div animate={{ opacity: [0, 1, 0], scale: [0.5, 1.5, 2] }} transition={{ duration: 2, repeat: Infinity, delay: 0.5 }} className="absolute inset-0 bg-amber-400  z-[-1]" />
             </motion.div>
             
             <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }} className="w-px h-12 bg-stone-300 mb-8" />

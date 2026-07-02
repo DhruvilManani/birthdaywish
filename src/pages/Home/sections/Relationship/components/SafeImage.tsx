@@ -8,7 +8,7 @@ interface SafeImageProps {
   style?: React.CSSProperties;
 }
 
-export const SafeImage: React.FC<SafeImageProps> = ({ src, alt, className = "", style }) => {
+export const SafeImage: React.FC<SafeImageProps> = React.memo(({ src, alt, className = "", style }) => {
   const [hasError, setHasError] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -31,4 +31,4 @@ export const SafeImage: React.FC<SafeImageProps> = ({ src, alt, className = "", 
       {/* Optional: Add a CSS loader or just the soft bg-stone-200/20 we have on the parent */}
     </div>
   );
-};
+});

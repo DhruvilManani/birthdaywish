@@ -43,7 +43,7 @@ interface CanvasLightRay {
   maxOpacity: number;
 }
 
-export const DreamyBackground: React.FC<DreamyBackgroundProps> = ({ brightness = 0 }) => {
+export const DreamyBackground: React.FC<DreamyBackgroundProps> = React.memo(({ brightness = 0 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -322,5 +322,5 @@ export const DreamyBackground: React.FC<DreamyBackgroundProps> = ({ brightness =
       className="absolute inset-0 w-full h-full pointer-events-none z-0"
     />
   );
-};
+});
 export default DreamyBackground;

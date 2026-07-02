@@ -56,8 +56,8 @@ const InteractiveIcon: React.FC<{ item: typeof icons[0] }> = ({ item }) => {
           <AnimatePresence>
             {isTapped && (
               <>
-                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.6, 0], y: -40, scale: 1.5, x: -10 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut" }} className="absolute -top-4 left-2 w-3 h-8 bg-stone-300 blur-sm rounded-full pointer-events-none" />
-                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.5, 0], y: -50, scale: 2, x: 10 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }} className="absolute -top-6 left-4 w-4 h-10 bg-stone-200 blur-md rounded-full pointer-events-none" />
+                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.6, 0], y: -40, scale: 1.5, x: -10 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut" }} className="absolute -top-4 left-2 w-3 h-8 bg-stone-300  rounded-full pointer-events-none" />
+                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.5, 0], y: -50, scale: 2, x: 10 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }} className="absolute -top-6 left-4 w-4 h-10 bg-stone-200  rounded-full pointer-events-none" />
               </>
             )}
           </AnimatePresence>

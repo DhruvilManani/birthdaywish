@@ -66,7 +66,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#fdfbf7]/90 backdrop-blur-sm overflow-hidden"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#fdfbf7]/90 backdrop- overflow-hidden"
     >
       {/* Background vignette & texture */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.2)_100%)] z-0" />
@@ -76,7 +76,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       <motion.div 
         animate={{ opacity: [0, 1, 0], scale: [0.5, 1, 0.5] }}
         transition={{ duration: 2, ease: "easeInOut" }}
-        className="absolute top-1/4 left-1/4 w-2 h-2 bg-amber-300 rounded-full blur-[1px] pointer-events-none z-0" 
+        className="absolute top-1/4 left-1/4 w-2 h-2 bg-amber-300 rounded-full  pointer-events-none z-0" 
       />
 
       {/* Close Background Tap */}
@@ -92,7 +92,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       {/* Close Button */}
       <button 
         onClick={onClose}
-        className="absolute top-6 right-6 z-30 w-10 h-10 flex items-center justify-center rounded-full border border-amber-300/50 bg-[#fdfbf7]/50 backdrop-blur-sm text-amber-700 hover:bg-[#fdfbf7] hover:scale-105 transition-all"
+        className="absolute top-6 right-6 z-30 w-10 h-10 flex items-center justify-center rounded-full border border-amber-300/50 bg-[#fdfbf7]/50 backdrop- text-amber-700 hover:bg-[#fdfbf7] hover:scale-105 transition-all"
         aria-label="Close Viewer"
       >
         ✕
@@ -137,7 +137,7 @@ export const MemoryViewer: React.FC<MemoryViewerProps> = ({ images, activeIndex,
       </div>
 
       {/* Thumbnail Strip */}
-      <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-stone-900/10 to-transparent z-30 flex items-center overflow-x-auto overflow-y-hidden px-4 md:px-12 space-x-2 no-scrollbar pointer-events-auto pb-4">
+      <div className="absolute bottom-0 left-0 w-full h-28 bg-gradient-to-t from-stone-900/20 to-transparent z-30 flex items-center overflow-x-auto overflow-y-hidden px-4 md:px-12 space-x-2 no-scrollbar pointer-events-auto pb-[calc(env(safe-area-inset-bottom)+1rem)]">
         {images.map((img, idx) => (
           <button
             key={`thumb-${img.id}`}

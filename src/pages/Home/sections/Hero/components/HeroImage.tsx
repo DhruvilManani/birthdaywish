@@ -46,15 +46,15 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
   }, [audioRef]);
 
   return (
-    <div className="relative w-full max-w-[280px] md:max-w-[340px] aspect-[4/5] mx-auto z-10 my-8 will-change-transform">
+    <div className="relative w-full max-w-[280px] md:max-w-[340px] max-h-[55dvh] aspect-[4/5] mx-auto z-10 my-8 transform-gpu">
       {/* Gentle floating animation for the entire frame container - very subtle */}
       <motion.div
-        className="w-full h-full will-change-transform"
+        className="w-full h-full transform-gpu"
         animate={{ y: [-4, 4, -4] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
       >
         {/* Luxury Glass Frame */}
-        <div className="absolute inset-0 rounded-[28px] overflow-hidden bg-white/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_20px_rgba(212,175,55,0.1)] border border-golden/30 backdrop-blur-sm">
+        <div className="absolute inset-0 rounded-[28px] overflow-hidden bg-white/5 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5),0_0_20px_rgba(212,175,55,0.1)] border border-golden/30 backdrop-">
           
           <AnimatePresence mode="wait">
             {!isRevealed ? (
@@ -68,7 +68,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
                 {[...Array(6)].map((_, i) => (
                   <motion.div
                     key={i}
-                    className="absolute rounded-full bg-golden blur-[2px]"
+                    className="absolute rounded-full bg-golden "
                     style={{
                       width: `${Math.random() * 4 + 2}px`,
                       height: `${Math.random() * 4 + 2}px`,
@@ -121,7 +121,7 @@ export const HeroImage: React.FC<HeroImageProps> = ({ src = '/images/girlfriend/
         </div>
         
         {/* Soft Depth Shadow / Glow behind the frame */}
-        <div className="absolute -inset-2 bg-golden/10 blur-[30px] rounded-[30px] -z-10 animate-pulse-slow" />
+        <div className="absolute -inset-2 bg-golden/10  rounded-[30px] -z-10 animate-pulse-slow" />
       </motion.div>
     </div>
   );

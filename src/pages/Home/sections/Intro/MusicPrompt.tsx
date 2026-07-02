@@ -15,7 +15,7 @@ export const MusicPrompt: React.FC<MusicPromptProps> = ({ onChoose }) => {
       initial="hidden"
       animate="show"
       exit="hidden"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-6 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-6 backdrop-"
     >
       <motion.div variants={scaleIn(0.1, 0.8)} className="w-full max-w-sm">
         <GlassCard className="text-center py-8 px-6 border-white/20" glowColor="pink">

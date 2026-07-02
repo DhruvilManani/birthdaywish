@@ -27,7 +27,7 @@ export const GallerySection: React.FC = () => {
           {Array.from({ length: 15 }).map((_, i) => (
             <motion.div
               key={`light-${i}`}
-              className="absolute rounded-full bg-white/40 blur-sm pointer-events-none"
+              className="absolute rounded-full bg-white/40  pointer-events-none"
               style={{ top: `${Math.random() * 100}vh`, left: `${Math.random() * 100}vw`, width: Math.random() * 10 + 5, height: Math.random() * 10 + 5 }}
               animate={{ y: [0, -50, 0], opacity: [0.1, 0.5, 0.1] }}
               transition={{ duration: 10 + Math.random() * 10, repeat: Infinity, ease: "easeInOut", delay: Math.random() * 5 }}
@@ -90,7 +90,7 @@ export const GallerySection: React.FC = () => {
             >
               🤍
               <motion.div
-                className="absolute top-0 right-0 w-3 h-3 bg-white rounded-full blur-[1px]"
+                className="absolute top-0 right-0 w-3 h-3 bg-white rounded-full "
                 animate={{ scale: [0, 1.5, 0], opacity: [0, 1, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
               />

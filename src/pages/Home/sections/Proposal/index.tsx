@@ -6,7 +6,7 @@ import { NightSkyParticles } from './NightSkyParticles';
 const VideoCallMemory: React.FC = () => {
   return (
     <motion.div 
-      className="relative w-72 h-[30rem] mx-auto rounded-[2rem] border-[1px] border-white/10 bg-black/40 overflow-hidden shadow-[0_0_40px_rgba(168,144,254,0.15)] z-20 backdrop-blur-sm"
+      className="relative w-72 h-[30rem] mx-auto rounded-[2rem] border-[1px] border-white/10 bg-black/40 overflow-hidden shadow-[0_0_40px_rgba(168,144,254,0.15)] z-20 backdrop-"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -19,16 +19,16 @@ const VideoCallMemory: React.FC = () => {
       />
       
       {/* Self PIP (Picture in Picture) */}
-      <div className="absolute top-6 right-4 w-20 h-28 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 overflow-hidden shadow-lg">
+      <div className="absolute top-6 right-4 w-20 h-28 bg-white/10 backdrop- rounded-xl border border-white/20 overflow-hidden shadow-lg">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50" />
       </div>
 
       {/* Interface Elements */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-6">
-        <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center border border-white/10">
+        <div className="w-12 h-12 rounded-full bg-white/10 backdrop- flex items-center justify-center border border-white/10">
           <div className="w-5 h-5 rounded-full border-2 border-white/60" />
         </div>
-        <div className="w-12 h-12 rounded-full bg-rose-500/80 backdrop-blur-sm flex items-center justify-center shadow-[0_0_15px_rgba(244,63,94,0.5)]">
+        <div className="w-12 h-12 rounded-full bg-rose-500/80 backdrop- flex items-center justify-center shadow-[0_0_15px_rgba(244,63,94,0.5)]">
           <div className="w-6 h-2 bg-white rounded-full rotate-45 transform origin-center translate-y-[-2px]" />
           <div className="w-6 h-2 bg-white rounded-full -rotate-45 transform origin-center translate-y-[-2px] absolute" />
         </div>

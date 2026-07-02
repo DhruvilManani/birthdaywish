@@ -10,7 +10,7 @@ interface NavigationButtonsProps {
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({ onNext, onPrev, showNext, showPrev }) => {
   return (
-    <div className="absolute bottom-safe left-0 w-full px-6 pb-8 md:pb-12 pointer-events-none z-[100] flex justify-between items-end">
+    <div className="absolute bottom-safe left-0 w-full px-6 pb-8 md:pb-12 pointer-events-none z-[9999] flex justify-between items-end">
       
       {/* Previous Button */}
       <div className="pointer-events-auto">

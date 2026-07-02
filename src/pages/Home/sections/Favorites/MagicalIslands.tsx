@@ -31,7 +31,7 @@ const IslandWrapper: React.FC<{ children: React.ReactNode, text: string, align?:
 export const PinkRosesIsland: React.FC = () => {
   return (
     <IslandWrapper text="You'll always choose pink." align="left">
-      <div className="relative w-64 h-64 bg-pink-100/50 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,192,203,0.6)] backdrop-blur-sm border border-pink-200">
+      <div className="relative w-64 h-64 bg-pink-100/50 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,192,203,0.6)] backdrop- border border-pink-200">
         <motion.div
           animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
@@ -48,7 +48,7 @@ export const PinkRosesIsland: React.FC = () => {
         {[1, 2, 3].map(i => (
           <motion.div
             key={i}
-            className="absolute w-3 h-3 bg-pink-300/60 rounded-full blur-[1px]"
+            className="absolute w-3 h-3 bg-pink-300/60 rounded-full "
             initial={{ top: '20%', left: `${20 + i * 20}%` }}
             animate={{ top: '120%', left: `${10 + i * 30}%`, rotate: 360, opacity: [0, 1, 0] }}
             transition={{ duration: 4 + i, repeat: Infinity, delay: i }}
@@ -62,7 +62,7 @@ export const PinkRosesIsland: React.FC = () => {
 export const PandaIsland: React.FC = () => {
   return (
     <IslandWrapper text="You are as adorable as one." align="right">
-      <div className="relative w-64 h-64 bg-white/40 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.8)] backdrop-blur-sm border border-white/60">
+      <div className="relative w-64 h-64 bg-white/40 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.8)] backdrop- border border-white/60">
         <motion.div
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
@@ -78,7 +78,7 @@ export const PandaIsland: React.FC = () => {
 export const ChildhoodIsland: React.FC = () => {
   return (
     <IslandWrapper text="Your inner child is my favourite." align="left">
-      <div className="relative w-64 h-64 bg-blue-100/50 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(173,216,230,0.6)] backdrop-blur-sm border border-blue-200">
+      <div className="relative w-64 h-64 bg-blue-100/50 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(173,216,230,0.6)] backdrop- border border-blue-200">
         <motion.div
           animate={{ rotate: [0, 10, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -108,7 +108,7 @@ export const ChildhoodIsland: React.FC = () => {
 export const CoffeeRainIsland: React.FC = () => {
   return (
     <IslandWrapper text="Coffee + Rain always felt like us." align="right">
-      <div className="relative w-64 h-64 bg-slate-800/20 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,0.1)] backdrop-blur-sm border border-slate-400/30 overflow-hidden">
+      <div className="relative w-64 h-64 bg-slate-800/20 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,0.1)] backdrop- border border-slate-400/30 overflow-hidden">
         {/* Rain */}
         {Array.from({ length: 15 }).map((_, i) => (
           <motion.div
@@ -127,12 +127,12 @@ export const CoffeeRainIsland: React.FC = () => {
           ☕
           {/* Steam */}
           <motion.div
-            className="absolute -top-8 left-4 w-4 h-12 bg-white/40 blur-md rounded-full"
+            className="absolute -top-8 left-4 w-4 h-12 bg-white/40  rounded-full"
             animate={{ y: [0, -20, -40], x: [0, 5, -5], opacity: [0, 0.8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
           />
           <motion.div
-            className="absolute -top-6 left-12 w-4 h-12 bg-white/30 blur-md rounded-full"
+            className="absolute -top-6 left-12 w-4 h-12 bg-white/30  rounded-full"
             animate={{ y: [0, -30, -50], x: [0, -5, 5], opacity: [0, 0.6, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "linear", delay: 0.5 }}
           />

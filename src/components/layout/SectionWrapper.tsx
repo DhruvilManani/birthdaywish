@@ -15,7 +15,6 @@ export const SectionWrapper: React.FC<SectionWrapperProps> = ({
   id,
   className,
   background = 'none',
-  fullHeight = true,
   ...props
 }) => {
   const bgClasses = {
@@ -29,7 +28,7 @@ export const SectionWrapper: React.FC<SectionWrapperProps> = ({
     <section
       id={id}
       className={cn(
-        'relative flex flex-col flex-1 w-full h-full px-6 py-12 md:py-24 overflow-y-auto overflow-x-hidden',
+        'relative flex flex-col flex-1 w-full h-full px-6 pt-[max(env(safe-area-inset-top),3rem)] pb-[calc(env(safe-area-inset-bottom)+7rem)] md:py-24 overflow-y-auto overflow-x-hidden',
         bgClasses[background],
         className
       )}

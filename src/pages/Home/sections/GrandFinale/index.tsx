@@ -64,8 +64,8 @@ const Lanterns = () => (
           className="absolute rounded-t-full rounded-b-md bg-gradient-to-b from-amber-200 to-orange-400 shadow-[0_0_25px_rgba(251,191,36,0.5)]"
           style={{ width: size, height: size * 1.4 }}
         >
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-amber-700/50 blur-[1px]" />
-          <motion.div animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 1 + Math.random(), repeat: Infinity }} className="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-yellow-100 rounded-full blur-[2px]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-amber-700/50 " />
+          <motion.div animate={{ opacity: [0.6, 1, 0.6] }} transition={{ duration: 1 + Math.random(), repeat: Infinity }} className="absolute bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-yellow-100 rounded-full " />
         </motion.div>
       );
     })}
@@ -152,7 +152,7 @@ const TimeCapsule = () => {
        <div className="absolute bottom-0 w-screen h-40 flex justify-center overflow-hidden z-0">
           <motion.div animate={{ x: [-20, 20, -20] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-0 w-[200%] h-full bg-gradient-to-t from-[#0A192F] to-transparent opacity-60" style={{ borderRadius: '50% 50% 0 0' }} />
           <motion.div animate={{ x: [20, -20, 20] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-0 w-[200%] h-full bg-gradient-to-t from-[#112240] to-transparent opacity-40 mix-blend-overlay" style={{ borderRadius: '40% 60% 0 0' }} />
-          <div className="absolute bottom-0 w-48 h-full bg-gradient-to-b from-transparent via-white/10 to-transparent blur-xl" />
+          <div className="absolute bottom-0 w-48 h-full bg-gradient-to-b from-transparent via-white/10 to-transparent " />
        </div>
 
        {/* Bottle */}
@@ -172,8 +172,8 @@ const TimeCapsule = () => {
           />
           
           {/* Glass Body */}
-          <div className="w-8 h-8 border-x-4 border-white/20 bg-white/5 backdrop-blur-sm relative z-10" />
-          <div className="w-full h-full border-4 border-white/20 bg-white/5 backdrop-blur-sm rounded-b-2xl rounded-t-3xl relative z-10 overflow-hidden shadow-[inset_0_0_30px_rgba(255,255,255,0.15),0_10px_20px_rgba(0,0,0,0.6)]">
+          <div className="w-8 h-8 border-x-4 border-white/20 bg-white/5 backdrop- relative z-10" />
+          <div className="w-full h-full border-4 border-white/20 bg-white/5 backdrop- rounded-b-2xl rounded-t-3xl relative z-10 overflow-hidden shadow-[inset_0_0_30px_rgba(255,255,255,0.15),0_10px_20px_rgba(0,0,0,0.6)]">
              {/* Reflection */}
              <div className="absolute top-0 left-2 w-3 h-full bg-gradient-to-b from-white/40 to-transparent rounded-full opacity-60" />
              
@@ -392,7 +392,7 @@ const PostCreditScene: React.FC = () => {
               initial={{ opacity: 0, y: '-20vh', x: `${Math.random() * 100}vw`, rotate: 0 }}
               animate={{ opacity: [0, 0.6, 0], y: '100dvh', rotate: 360 }}
               transition={{ duration: 5 + Math.random() * 4, delay: Math.random() * 3, ease: "linear" }}
-              className="absolute text-rose-600/60 text-lg blur-[1px]"
+              className="absolute text-rose-600/60 text-lg "
             >
               🥀
             </motion.div>
@@ -405,7 +405,7 @@ const PostCreditScene: React.FC = () => {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: [0, 1, 0], scale: [0, 1.5, 0] }}
               transition={{ duration: 2 + Math.random() * 2, delay: Math.random() * 3, repeat: Infinity }}
-              className="absolute w-1.5 h-1.5 bg-amber-200 rounded-full blur-[2px]"
+              className="absolute w-1.5 h-1.5 bg-amber-200 rounded-full "
               style={{ left: `${20 + Math.random() * 60}%`, top: `${30 + Math.random() * 40}%` }}
             />
           ))}
@@ -459,7 +459,7 @@ const PostCreditScene: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 0.8, y: 0 }}
               transition={{ delay: 2, duration: 4 }}
-              className="absolute top-1/4 text-4xl blur-[1px]"
+              className="absolute top-1/4 text-4xl "
             >
               🌙
             </motion.div>
@@ -467,7 +467,7 @@ const PostCreditScene: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 0.6, 0] }}
               transition={{ delay: 4, duration: 4, repeat: Infinity }}
-              className="absolute top-[20%] right-[30%] w-1 h-1 bg-white rounded-full blur-[1px]"
+              className="absolute top-[20%] right-[30%] w-1 h-1 bg-white rounded-full "
             />
           </motion.div>
         )}
@@ -685,7 +685,7 @@ export const GrandFinaleSection: React.FC = () => {
          >
             <button 
               onClick={handleReplay}
-              className="w-full md:w-auto px-8 py-4 rounded-full border border-stone-600 bg-white/5 backdrop-blur-sm text-stone-300 font-elegant tracking-widest uppercase hover:bg-white/10 hover:border-stone-400 transition-all duration-300"
+              className="w-full md:w-auto px-8 py-4 rounded-full border border-stone-600 bg-white/5 backdrop- text-stone-300 font-elegant tracking-widest uppercase hover:bg-white/10 hover:border-stone-400 transition-all duration-300"
             >
               ❤️ Replay Our Story
             </button>

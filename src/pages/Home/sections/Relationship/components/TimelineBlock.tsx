@@ -61,8 +61,8 @@ export const TimelineBlock: React.FC<TimelineBlockProps> = ({ time, title, icon,
           <AnimatePresence>
             {isTapped && (
               <>
-                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.5, 0], y: -30, scale: 1.5, x: -5 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut" }} className="absolute -top-4 w-2 h-6 bg-stone-300 blur-sm rounded-full" />
-                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.4, 0], y: -40, scale: 2, x: 5 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }} className="absolute -top-6 w-3 h-8 bg-stone-200 blur-md rounded-full" />
+                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.5, 0], y: -30, scale: 1.5, x: -5 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut" }} className="absolute -top-4 w-2 h-6 bg-stone-300  rounded-full" />
+                <motion.div initial={{ opacity: 0, y: 0, scale: 0.5 }} animate={{ opacity: [0, 0.4, 0], y: -40, scale: 2, x: 5 }} exit={{ opacity: 0 }} transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }} className="absolute -top-6 w-3 h-8 bg-stone-200  rounded-full" />
               </>
             )}
           </AnimatePresence>

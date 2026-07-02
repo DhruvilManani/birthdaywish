@@ -63,11 +63,11 @@ export const LetterSection: React.FC = () => {
            <motion.div style={{ opacity: particlesOpacity }} className="absolute inset-0">
              {/* Golden Dust */}
              {[...Array(8)].map((_, i) => (
-                <motion.div key={`dust-${i}`} animate={{ y: [-10, -30], opacity: [0, 0.3, 0], x: Math.sin(i)*10 }} transition={{ duration: 6 + Math.random()*5, repeat: Infinity, delay: Math.random()*5 }} className="absolute w-[2px] h-[2px] bg-amber-400 rounded-full blur-[1px]" style={{ left: `${Math.random()*100}%`, top: `${Math.random()*100}%` }} />
+                <motion.div key={`dust-${i}`} animate={{ y: [-10, -30], opacity: [0, 0.3, 0], x: Math.sin(i)*10 }} transition={{ duration: 6 + Math.random()*5, repeat: Infinity, delay: Math.random()*5 }} className="absolute w-[2px] h-[2px] bg-amber-400 rounded-full " style={{ left: `${Math.random()*100}%`, top: `${Math.random()*100}%` }} />
              ))}
              {/* Fairy Lights */}
              {[...Array(4)].map((_, i) => (
-                <motion.div key={`light-${i}`} animate={{ opacity: [0.1, 0.4, 0.1], scale: [1, 1.5, 1] }} transition={{ duration: 4 + Math.random()*4, repeat: Infinity, delay: Math.random()*2 }} className="absolute w-3 h-3 bg-amber-200 rounded-full blur-[4px]" style={{ left: `${Math.random()*100}%`, top: `${Math.random()*100}%` }} />
+                <motion.div key={`light-${i}`} animate={{ opacity: [0.1, 0.4, 0.1], scale: [1, 1.5, 1] }} transition={{ duration: 4 + Math.random()*4, repeat: Infinity, delay: Math.random()*2 }} className="absolute w-3 h-3 bg-amber-200 rounded-full " style={{ left: `${Math.random()*100}%`, top: `${Math.random()*100}%` }} />
              ))}
            </motion.div>
         </div>
@@ -401,7 +401,7 @@ const EnvelopeOpening = ({ onOpenComplete }: { onOpenComplete: () => void }) => 
                 <motion.div 
                   animate={{ scale: [1, 1.1, 1], opacity: [0.6, 1, 0.6] }} 
                   transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-0 rounded-full bg-red-600/40 blur-md pointer-events-none" 
+                  className="absolute inset-0 rounded-full bg-red-600/40  pointer-events-none" 
                 />
              )}
              <div className="w-12 h-12 rounded-full border border-red-950/40 flex items-center justify-center text-red-200/90 font-elegant italic text-2xl drop-shadow-sm group-hover:scale-105 transition-transform">
@@ -546,10 +546,10 @@ const EndingSequence = ({ onComplete }: { onComplete: () => void }) => {
 
           {/* Phase 2: Thank You Screen (8s - 20s) */}
           <div className="absolute inset-0 flex flex-col items-center justify-center px-6 pointer-events-none text-center">
-             <motion.p animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -10] }} transition={{ duration: 5, times: [0, 0.2, 0.8, 1], delay: 8 }} className="absolute font-elegant italic text-amber-100/90 text-2xl md:text-4xl tracking-wide leading-relaxed">
+             <motion.p animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -10] }} transition={{ duration: 5, times: [0, 0.2, 0.8, 1], delay: 8 }} className="absolute font-elegant italic text-amber-100 break-words/90 text-2xl md:text-4xl tracking-wide leading-relaxed break-words">
                Some feelings... <br/> <span className="text-xl md:text-3xl mt-4 block">are impossible to fit inside a single letter.</span>
              </motion.p>
-             <motion.p animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -10] }} transition={{ duration: 5, times: [0, 0.2, 0.8, 1], delay: 14 }} className="absolute font-elegant italic text-amber-100/90 text-2xl md:text-4xl tracking-wide">
+             <motion.p animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -10] }} transition={{ duration: 5, times: [0, 0.2, 0.8, 1], delay: 14 }} className="absolute font-elegant italic text-amber-100 break-words/90 text-2xl md:text-4xl tracking-wide">
                So I made this entire journey for you.
              </motion.p>
           </div>

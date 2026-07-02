@@ -56,7 +56,7 @@ export const ScrapbookMemory: React.FC<ScrapbookMemoryProps> = ({
             <motion.div 
               animate={{ y: ['-100%', '200%'] }} 
               transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 4 }}
-              className="absolute inset-0 bg-white opacity-50 blur-[2px] w-full h-4 rotate-45"
+              className="absolute inset-0 bg-white opacity-50  w-full h-4 rotate-45"
             />
           </div>
         )}
